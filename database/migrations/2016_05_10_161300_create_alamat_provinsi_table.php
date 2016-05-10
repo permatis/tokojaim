@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProdukTagTable extends Migration
+class CreateAlamatProvinsiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,13 @@ class CreateProdukTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('produk_tag', function (Blueprint $table) {
+        Schema::create('alamat_provinsi', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('produk_id')->unsigned();
-            $table->foreign('produk_id')->references('id')->on('produk')
+            $table->integer('alamat_id')->unsigned();
+            $table->foreign('alamat_id')->references('id')->on('alamat')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->integer('tag_id')->unsigned();
-            $table->foreign('tag_id')->references('id')->on('tags')
+            $table->integer('provinsi_id')->unsigned();
+            $table->foreign('provinsi_id')->references('id')->on('provinsi')
                 ->onUpdate('cascade')->onDelete('cascade');
             //
         });
@@ -31,6 +31,6 @@ class CreateProdukTagTable extends Migration
      */
     public function down()
     {
-        Schema::drop('produk_tag');
+        Schema::drop('alamat_provinsi');
     }
 }

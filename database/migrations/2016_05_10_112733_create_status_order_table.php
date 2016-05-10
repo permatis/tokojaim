@@ -12,7 +12,13 @@ class CreateStatusOrderTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('status_order', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nama');
+            $table->string('deskripsi');
+            $table->timestamps();
+            //
+        });
     }
 
     /**
@@ -22,6 +28,6 @@ class CreateStatusOrderTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('status_order');
     }
 }

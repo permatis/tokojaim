@@ -12,7 +12,16 @@ class CreateGrosirTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('grosir', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('min');
+            $table->integer('max');
+            $table->integer('harga');
+            $table->integer('produk_id')->unsigned();
+            $table->foreign('produk_id')->references('id')->on('produk')
+                ->onUpdate('cascade')->onDelete('cascade');
+            //
+        });
     }
 
     /**
@@ -22,6 +31,6 @@ class CreateGrosirTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('grosir');
     }
 }

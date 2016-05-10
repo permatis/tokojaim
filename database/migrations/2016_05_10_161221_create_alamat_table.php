@@ -12,7 +12,14 @@ class CreateAlamatTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('alamat', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('kabupaten');
+            $table->string('alamat');
+            $table->string('kode_pos');
+            $table->timestamps();
+            //
+        });
     }
 
     /**
@@ -22,6 +29,6 @@ class CreateAlamatTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('alamat');
     }
 }

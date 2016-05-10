@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserTable extends Migration
+class CreateIpAddressTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,11 @@ class CreateUserTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('ip_address', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('ip_address', 50);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -22,6 +26,6 @@ class CreateUserTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('ip_address');
     }
 }

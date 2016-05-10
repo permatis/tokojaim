@@ -12,7 +12,12 @@ class CreateGambarTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('gambar', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nama');
+            $table->string('file');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -22,6 +27,6 @@ class CreateGambarTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('gambar');
     }
 }

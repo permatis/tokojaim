@@ -12,7 +12,11 @@ class CreateBrandTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('brands', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nama');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -22,6 +26,6 @@ class CreateBrandTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('brands');
     }
 }

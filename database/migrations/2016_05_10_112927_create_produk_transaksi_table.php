@@ -12,7 +12,16 @@ class CreateProdukTransaksiTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('produk_transaksi', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('produk_id')->unsigned();
+            $table->foreign('produk_id')->references('id')->on('produk')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('transaksi_id')->unsigned();
+            $table->foreign('transaksi_id')->references('id')->on('transaksi')
+                ->onUpdate('cascade')->onDelete('cascade');
+            //
+        });
     }
 
     /**
@@ -22,6 +31,6 @@ class CreateProdukTransaksiTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('produk_transaksi');
     }
 }

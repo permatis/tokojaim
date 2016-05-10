@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIpAddressTable extends Migration
+class CreateProvinsiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,10 @@ class CreateIpAddressTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('provinsi', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nama_provinsi');
+        });
     }
 
     /**
@@ -22,6 +25,6 @@ class CreateIpAddressTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('provinsi');
     }
 }

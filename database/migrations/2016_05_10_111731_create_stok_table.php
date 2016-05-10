@@ -12,7 +12,11 @@ class CreateStokTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('stok', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('jumlah');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -22,6 +26,6 @@ class CreateStokTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('stok');
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProdukTable extends Migration
+class CreateProfileTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,19 +12,18 @@ class CreateProdukTable extends Migration
      */
     public function up()
     {
-        Schema::create('produk', function (Blueprint $table) {
+        Schema::create('profile', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('jenis_kelamin');
-            $table->string('judul');
-            $table->string('slug');
-            $table->string('berat', 10);
-            $table->string('deskripsi');
+            $table->string('agama');
+            $table->string('tempat_lahir');
+            $table->date('tanggal_lahir');
             $table->integer('telepon');
-            $table->integer('stok_id')->unsigned();
-            $table->foreign('stok_id')->references('id')->on('stok')
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->integer('gambar_id')->unsigned();
-            $table->foreign('gambar_id')->references('id')->on('gambar')
+            $table->integer('alamat_id')->unsigned();
+            $table->foreign('alamat_id')->references('id')->on('alamat')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
@@ -38,6 +37,6 @@ class CreateProdukTable extends Migration
      */
     public function down()
     {
-        Schema::drop('produk');
+        Schema::drop('profile');
     }
 }

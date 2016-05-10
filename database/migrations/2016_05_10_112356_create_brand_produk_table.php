@@ -12,7 +12,16 @@ class CreateBrandProdukTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('produk_brand', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('produk_id')->unsigned();
+            $table->foreign('produk_id')->references('id')->on('produk')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('brand_id')->unsigned();
+            $table->foreign('brand_id')->references('id')->on('brands')
+                ->onUpdate('cascade')->onDelete('cascade');
+            //
+        });
     }
 
     /**
@@ -22,6 +31,6 @@ class CreateBrandProdukTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('produk_brand');
     }
 }
