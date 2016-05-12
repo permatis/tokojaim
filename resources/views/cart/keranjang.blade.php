@@ -1,4 +1,4 @@
-@if(count(\Cart::getContent()) > 0)
+@if(count(\Cart::content()) > 0)
 <?php $no = 1; ?>
 <table>
 	<tr>
@@ -9,15 +9,15 @@
 		<th>Total</th>
 		<th>Action</th>
 	</tr>
-	@foreach(\Cart::getContent() as $cart)
+	@foreach(\Cart::content() as $cart)
 	<tr>
 		<td>{{ $no++ }}</td>
 		<td>{{ $cart->name }}</td>
 		<td>{{ $cart->price }}</td>
-		<td>{{ $cart->quantity }}</td>
-		<td>{{ $total = $cart->price * $cart->quantity }}</td>
+		<td>{{ $cart->qty }}</td>
+		<td>{{ $total = $cart->price * $cart->qty }}</td>
 		<td>
-			<form action="{{ url('cart/'.$cart->id) }}" method="POST">
+			<form action="{{ url('cart/'.$cart->rowid) }}" method="POST">
 			{!! csrf_field(); !!}
 			<input type="hidden" name="_method" value="DELETE">
 			<button type="submit">Hapus</button>
@@ -27,7 +27,7 @@
 	@endforeach
 	<tr>
 		<td colspan="4" align="right">Sub Total</td>
-		<td colspan="2"><b>{{ \Cart::getSubTotal() }}</b></td>
+		<td colspan="2"><b>{{ \Cart::total() }}</b></td>
 	</tr>
 </table>
 @endif
