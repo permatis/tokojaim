@@ -15,7 +15,7 @@ class Gambar extends Model
 
     public function produk()
     {
-    	return $this->hasMany(\App\Models\Produk::class, 'produk');
+    	return $this->belongsToMany(\App\Models\Produk::class, 'produk_gambar');
     }
     
 }

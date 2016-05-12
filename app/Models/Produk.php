@@ -10,7 +10,7 @@ class Produk extends Model
 	protected $table = 'produk';
 
     protected $fillable = [
-    	'judul', 'slug', 'berat', 'deskripsi', 'harga', 'stok_id', 'gambar_id'	
+    	'judul', 'slug', 'berat', 'deskripsi', 'harga', 'stok_id'
     ];
 
     public function user()
@@ -20,12 +20,12 @@ class Produk extends Model
 
     public function stok()
     {
-    	return $this->belongsTo(\App\Models\Stok::class , 'stok');
+    	return $this->belongsTo(\App\Models\Stok::class);
     }
 
     public function gambar()
     {
-    	return $this->belongsTo(\App\Models\Gambar::class, 'gambar');
+    	return $this->belongsToMany(\App\Models\Gambar::class, 'produk_gambar');
     }
 
     public function grosir()

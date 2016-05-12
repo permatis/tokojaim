@@ -14,17 +14,13 @@ class CreateProdukTable extends Migration
     {
         Schema::create('produk', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('jenis_kelamin');
             $table->string('judul');
             $table->string('slug');
-            $table->string('berat', 10);
+            $table->string('berat', 5);
             $table->string('deskripsi');
-            $table->integer('telepon');
+            $table->integer('harga');
             $table->integer('stok_id')->unsigned();
             $table->foreign('stok_id')->references('id')->on('stok')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->integer('gambar_id')->unsigned();
-            $table->foreign('gambar_id')->references('id')->on('gambar')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
