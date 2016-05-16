@@ -1,12 +1,6 @@
 <?php
 
-Route::get('/', function () {
-	return view('home')
-		->with([ 'produk' => \App\Models\Produk::whereHas('stok', function($query)
-			{
-				$query->where('jumlah', '>', 0);
-			})->paginate(3) ]);
-});
+Route::get('/', 'CartController@index');
 
 Route::group(['prefix' => 'produk'], function() {
     Route::get('{slug}', function($slug) {

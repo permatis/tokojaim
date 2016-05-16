@@ -11,6 +11,7 @@
 		<form action="{{ url('cart/tambah') }}" method="post">
 			{!! csrf_field() !!}
 			<input type="hidden" name="config_id" value="{{ $p->id }}">
+			<input type="hidden" name="type_cart" value="belanja">
 			Stok : {{ $p->stok->jumlah }} barang
 			<input type="number" name="jumlah" min="1" max="{{ $p->stok->jumlah }}" value="1">
 			<button type="submit">tambah ke keranjang</button>

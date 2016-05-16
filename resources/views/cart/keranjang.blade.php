@@ -1,4 +1,4 @@
-@if(count(\Cart::content()) > 0)
+@if(count($carts) > 0)
 <?php $no = 1; ?>
 <table>
 	<tr>
@@ -9,7 +9,7 @@
 		<th>Total</th>
 		<th>Action</th>
 	</tr>
-	@foreach(\Cart::content() as $cart)
+	@foreach($carts as $cart)
 	<tr>
 		<td>{{ $no++ }}</td>
 		<td>{{ $cart->name }}</td>
@@ -20,6 +20,7 @@
 			<form action="{{ url('cart/'.$cart->rowid) }}" method="POST">
 			{!! csrf_field(); !!}
 			<input type="hidden" name="_method" value="DELETE">
+			<input type="hidden" name="type_cart" value="belanja">
 			<button type="submit">Hapus</button>
 			</form>
 		</td>
