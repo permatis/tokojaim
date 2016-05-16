@@ -17,6 +17,8 @@ Route::group(['prefix' => 'cart'], function() {
     Route::delete('{id}', 'CartController@hapus');
 });
 
+//===== route gawean e Hari ======//
 Route::get('admin/dashboard', function () {
     return view('admin.dashboard');
 });
+Route::resource('/admin/produk','ProdukController');
