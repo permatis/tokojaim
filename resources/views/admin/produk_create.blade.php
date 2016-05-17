@@ -17,13 +17,13 @@
     					<div class="box-body">
     						<div class="form-group">
     							<label>judul</label>
-    							<input name="judul" class="form-control" placeholder="judul" type="text">						
+    							<input name="judul" class="form-control" placeholder="judul" type="text">		
     							</input>
     						</div>
     						
     						<div class="form-group">
     							<label>deskripsi</label>
-    							<textarea name="deskripsi" class="form-control" rows="8"></textarea>
+    							<textarea name="deskripsi" class="form-control" id="textarea" rows="8"></textarea>
     							</input>
     						</div>
     					</div>
