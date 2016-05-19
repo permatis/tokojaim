@@ -21,15 +21,14 @@ Route::group(['prefix' => 'cart'], function() {
 Route::get('admin/dashboard', function () {
     return view('admin.dashboard');
 });
-Route::resource('/admin/produk','ProdukController');
-Route::get('/u/dashboard','UserController@index');
-Route::get('/u/favorit','UserController@index');
-Route::get('/u/pembelian/','UserController@index');
-Route::get('/u/pembelian/konfirmasi','UserController@index');
-Route::get('/u/pembelian/status_pemesanan','UserController@index');
-Route::get('/u/pembelian/konfirmasi','UserController@index');
-Route::get('/u/pembelian/history','UserController@index');
-Route::get('/u/pengaturan/biodata','UserController@index');
-Route::get('/u/pengaturan/alamat','UserController@index');
-Route::get('/u/pengaturan/rekening','UserController@index');
+Route::resource('/admin/produk','ProdukController');;
+Route::get('/u/favorit','UserController@favorit');
+Route::get('/u/pembelian/','UserController@pembelian');
+Route::get('/u/pembelian/konfirmasi','UserController@konfirmasi');
+Route::get('/u/pembelian/status_pemesanan','UserController@status_pemesanan');
+Route::get('/u/pembelian/konfirmasi','UserController@konfirmasi');
+Route::get('/u/pembelian/history','UserController@history');
+Route::get('/u/pengaturan/biodata','UserController@biodata');
+Route::get('/u/pengaturan/alamat','UserController@alamat');
+Route::get('/u/pengaturan/rekening','UserController@rekening');
 
