@@ -28,8 +28,7 @@ Route::get('admin/dashboard', function () {
 });
 Route::resource('/admin/produk','ProdukController');;
 Route::get('/u/favorit','UserController@favorit');
-Route::get('/u/pembelian/','UserController@pembelian');
-Route::get('/u/pembelian/konfirmasi','UserController@konfirmasi');
+Route::get('/u/pembelian/','UserController@konfirmasi');
 Route::get('/u/pembelian/status_pemesanan','UserController@status_pemesanan');
 Route::get('/u/pembelian/konfirmasi','UserController@konfirmasi');
 Route::get('/u/pembelian/history','UserController@history');
