@@ -64,6 +64,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- jQuery 2.1.4 -->
     <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
@@ -71,7 +72,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ URL::asset('admin/dist/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
     <script>
   $(function () {
+    $('#rupiah2').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
     $("#textarea").wysihtml5();
+
+    $("#rupiah2").keyup(function() {
+    var clone = $(this).val();
+    var cloned = clone.replace(/[A-Za-z$. ,-]/g, "")
+    $("#rupiah").val(cloned);
+    });    
   });
 </script>
   </body>

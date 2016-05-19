@@ -11,13 +11,10 @@
             <li class="treeview">
               <a href="#"><i class="fa fa-shopping-bag"></i> <span>Produk</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-               <li><a href="#/tambah_produk"><i class="fa fa-circle-o"></i>tambah Produk</a></li>
-                <li><a href="#/list_produk"><i class="fa fa-circle-o"></i>List Produk</a></li>
+                <li><a href="{{ url('admin/produk') }}"><i class="fa fa-circle-o"></i>List Produk</a></li>
+                <li><a href="{{ url('admin/produk/create') }}"><i class="fa fa-circle-o"></i>tambah Produk</a></li>
               </ul>
             </li>
-
-            <li><a href="#admin/diskon"><i class="fa fa-tags"></i> <span>Diskon</span></a></li>
-
             <li class="treeview">
               <a href="#"><i class="fa fa-list"></i> <span>Kategori</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
@@ -36,8 +33,6 @@
 
              <!-- Optionally, you can add icons to the links -->
             <li><a href="#"><i class="fa fa-tachometer"></i> <span>Management User</span></a></li>
-
-            <li><a href="#"><i class="fa fa-tachometer"></i> <span>Management Admin</span></a></li>
 
             <li class="treeview">
               <a href="#"><i class="fa fa-columns"></i> <span>Halaman</span> <i class="fa fa-angle-left pull-right"></i></a>

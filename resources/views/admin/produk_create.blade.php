@@ -12,7 +12,7 @@
     <section class="content">
     	<div class="row">
             {!! Form::open(array('route' => 'admin.produk.store')) !!}
-    		<div class="col-md-8">
+    		<div class="col-md-9">
     			<div class="box box-primary">				
     					<div class="box-body">
     						<div class="form-group">
@@ -31,29 +31,38 @@
     			</div>
     		</div>
 
-    		<div class="col-md-4">
+    		<div class="col-md-3">
     			<div class="box box-primary">
+                    
+                    <div class="box-header with-border">
+                     <button type="button">Simpan draft</button>
+                     <button type="button" class="pull-right">Preview</button>
+                    </div>
                    <div class="box-body">
                             <div class="form-group">
                                 <label>harga</label>
-                                <input name="harga" class="form-control" placeholder="harga" type="text">
+                                <input name="harga" id="rupiah" class="form-control" placeholder="harga" type="hidden">
+                                <input id="rupiah2" class="form-control" placeholder="harga" type="text">
                                 </input>
                             </div>
-                            <div class="form-group">
-                                <label>berat</label>
+                            <label>berat</label>
+                            <div class="input-group">
                                 <input name="berat" class="form-control" placeholder="berat" type="text">
+                                <span class="input-group-addon">gram</span>
                                 </input>
-                            </div>
+                            </div><br>
                             <div class="form-group">
                                 <label>stok</label>
                                 <input name="stok" class="form-control" placeholder="stok" type="text">
                                 </input>
                             </div>
                    </div>
-                   <div class="box-footer">
-                    <button type="submit" class="btn btn-info pull-right">Simpan</button>
-                  </div>
+                    <div class="box-footer">
+                     <button type="submit" class="btn btn-info pull-right">Publish</button>
+                    </div>
+
                 </div>
+                <div class="box box-primary"></div>
     		</div>
             {!! Form::close() !!}
     	</div>
