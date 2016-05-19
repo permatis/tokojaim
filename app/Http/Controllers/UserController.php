@@ -17,8 +17,11 @@ class UserController extends Controller
     public function pembelian() {
     	return view('user.pembelian');
     }
-    public function konfirmasi() {
-    	return view('user.konfirmasi');
+    public function konfirmasi_pembayaran() {
+        return view('user.konfirmasi_pembayaran');
+    } 
+    public function konfirmasi_penerimaan() {
+    	return view('user.konfirmasi_penerimaan');
     }
     public function status_pemesanan() {
     	return view('user.status_pemesanan');

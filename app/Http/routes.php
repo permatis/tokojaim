@@ -26,11 +26,12 @@ Route::group(['prefix' => 'cart'], function() {
 Route::get('admin/dashboard', function () {
     return view('admin.dashboard');
 });
-Route::resource('/admin/produk','ProdukController');;
+Route::resource('/admin/produk','ProdukController');
 Route::get('/u/favorit','UserController@favorit');
-Route::get('/u/pembelian/','UserController@konfirmasi');
+Route::get('/u/pembelian/','UserController@konfirmasi_pembayaran'); //sudah
 Route::get('/u/pembelian/status_pemesanan','UserController@status_pemesanan');
-Route::get('/u/pembelian/konfirmasi','UserController@konfirmasi');
+Route::get('/u/pembelian/konfirmasi_pembayaran','UserController@konfirmasi_pembayaran'); //sudah
+Route::get('/u/pembelian/konfirmasi_penerimaan','UserController@konfirmasi_penerimaan'); 
 Route::get('/u/pembelian/history','UserController@history');
 Route::get('/u/pengaturan/biodata','UserController@biodata');
 Route::get('/u/pengaturan/alamat','UserController@alamat');
