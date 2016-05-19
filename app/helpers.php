@@ -1,4 +1,5 @@
 <?php
+use App\Repository\CartRepository as Cart;
 
 if (! function_exists('changeIdKeys'))
 {
@@ -11,5 +12,13 @@ if (! function_exists('changeIdKeys'))
 		}
 
 		return $array;
+	}
+}
+
+if(! function_exists('carts'))
+{
+	function carts()
+	{
+		return Cart::getContent('belanja');
 	}
 }

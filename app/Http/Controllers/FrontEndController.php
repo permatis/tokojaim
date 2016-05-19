@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Repository\CartRepository;
-use App\Models\Produk;
+use App\Repository\ProdukRepository;
 use App\Models\Kategori;
 
 class FrontEndController extends Controller
@@ -16,7 +16,7 @@ class FrontEndController extends Controller
     private $kategori;
 
     public function __construct(CartRepository $cart, 
-                                Produk $produk, 
+                                ProdukRepository $produk, 
                                 Kategori $kategori)
     {
         $this->cart = $cart;
@@ -31,10 +31,9 @@ class FrontEndController extends Controller
      */
     public function index()
     {
-        $carts = $this->carts();
-        $produk = $this->produk->paginate(3);
+        $produk = $this->produk->get();
 
-        return view('frontend.home', compact('produk', 'carts'));
+        return view('frontend.home', compact('produk'));
     }
 
     /**
@@ -45,7 +44,6 @@ class FrontEndController extends Controller
      */
     public function kategori($parent, $child = null)
     {
-        $carts = $this->carts();
         $kat = $this->kategori->where('nama', str_slug($parent, '-'))->first();
 
         $kategori = ($child) ? 
@@ -58,11 +56,9 @@ class FrontEndController extends Controller
             return abort(404);
         }
 
-        $produks = ( $kategori->parent_id == 0 ) ? $kategori->produk()->orWhereIn(
-                        'kategori_id', [ $this->getKategoriId($kategori->id) ]
-                    )->get() : $kategori->produk()->get();
+        $produks = $this->produk->getProdukByKategori($kategori);
         
-        return view('frontend.kategori', compact('produks', 'carts'));
+        return view('frontend.kategori', compact('produks'));
     }
 
     /**
@@ -71,13 +67,12 @@ class FrontEndController extends Controller
     public function search()
     {
         $search = request()->get('search');
+        $produk = '';
+        $keywords = ($search['keywords']) ? $search['keywords'] : '';
         
         if($search) {
-            $keywords = ($search['keywords']) ? $search['keywords'] : '';
-            $produk = '';
-    
             if(count($keywords) > 0) {
-                $produk = $this->produk->where('judul', 'LIKE', '%'.$search['keywords'].'%')->get();
+                $produk = $this->produk->search($keywords);
             }
         }
 
@@ -85,11 +80,9 @@ class FrontEndController extends Controller
             // show error message
         }
 
-        $produks = (count($produk) > 0) ? $produk : $this->produk->get();
+        $produks = ( count($produk) > 0 && $keywords ) ? $produk : $this->produk->get();
 
-        $carts = $this->carts();
-
-        return view('frontend.produks', compact('produks', 'carts', 'keywords'));
+        return view('frontend.produks', compact('produks', 'keywords'));
     }
 
     /**
@@ -99,11 +92,10 @@ class FrontEndController extends Controller
      */
     public function detail($slug)
     {
-        $carts = $this->carts();
-        $produk = $this->produk->where('slug', $slug)->first();
+        $produk = $this->produk->find($slug, 'slug');
 
         return ($produk) ? 
-            view('frontend.detail-produk', compact('produk', 'carts')) : 
+            view('frontend.detail-produk', compact('produk')) : 
             abort(404);
     }
 
@@ -113,9 +105,12 @@ class FrontEndController extends Controller
      */
     public function checkout()
     {
-        $carts = $this->carts();
-        
-        return view('frontend.keranjang', compact('carts'));
+        if(count(request()-get('step')) > 0)
+        {
+            //step-step
+        }
+
+        return view('frontend.keranjang');
     }
     
     /**
@@ -158,25 +153,5 @@ class FrontEndController extends Controller
         );
 
     	return $this->back;
-    }
-
-    /**
-     * Mendapatkan nilai dari keranjang belanja.
-     * @return array
-     */
-    protected function carts()
-    {
-        return $this->cart->getContent('belanja');
-    }
-
-    protected function getKategoriId($parent_id)
-    {
-        $kategori = $this->kategori->where('parent_id', $parent_id)->get()->toArray();
-
-        foreach ($kategori as $kat) {
-            $k[] = $kat['id'];
-        }
-
-        return implode(',', $k);
     }
 }

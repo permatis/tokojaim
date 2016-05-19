@@ -17,12 +17,8 @@
 			{!! csrf_field() !!}
 			<input type="hidden" name="config_id" value="{{ $p->id }}">
 			Stok : {{ $p->stok->jumlah }} barang
-			@if( $p->stok->jumlah != 0 ) 
-				<input type="number" name="jumlah" min="1" max="{{ $p->stok->jumlah }}" value="1"> 
-			@endif
-			@if( $p->stok->jumlah != 0 ) 
-				<button type="submit" name="submit" value="belanja">tambah ke keranjang</button> 
-			@else <b>Hub. CS</b> @endif
+			<input type="number" name="jumlah" min="1" max="{{ $p->stok->jumlah }}" value="1"> 
+			<button type="submit" name="submit" value="belanja">tambah ke keranjang</button> 
 			<button type="submit" name="submit" value="favorit">tambah ke favorit</button>
 		</form>
 	</li>

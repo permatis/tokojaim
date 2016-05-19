@@ -57,5 +57,11 @@ class Produk extends Model
     {
         return $this->belongsToMany(\App\Models\Transaksi::class, 'transaksi');
     }
+ 
+    public function favorit()
+    {
+        return $this->belongsToMany(\App\Models\Produk::class, 'favorit');
+    }
+
 
 }

@@ -38,5 +38,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\Transaksi::class, 'transaksi');
     }
+
+    public function favorit()
+    {
+        return $this->belongsToMany(\App\Models\Produk::class, 'favorit');
+    }
+
     
 }
