@@ -19,7 +19,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ URL::asset('admin/dist/css/AdminLTE.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/dist/css/skins/skin-purple.min.css') }}">
-
+    <link rel="stylesheet" href="{{ URL::asset('admin/dist/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -68,5 +68,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
     <script src="{{ URL::asset('admin/dist/js/app.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/dist/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+    <script>
+  $(function () {
+    $("#textarea").wysihtml5();
+  });
+</script>
   </body>
 </html>
