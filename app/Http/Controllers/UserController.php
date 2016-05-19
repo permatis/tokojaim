@@ -12,27 +12,27 @@ class UserController extends Controller
 
     }
     public function favorit() {
-    	
+    	return view('user.favorit');
     }
     public function pembelian() {
-
+    	return view('user.pembelian');
     }
     public function konfirmasi() {
-
+    	return view('user.konfirmasi');
     }
     public function status_pemesanan() {
-
+    	return view('user.status_pemesanan');
     }
     public function history() {
-
+    	return view('user.history');
     }
     public function biodata() {
-
+    	return view('user.biodata');
     }
     public function alamat() {
-    	
+    	return view('user.alamat');
     }
     public function rekening() {
-
+    	return view('user.rekening');
     }
 }
