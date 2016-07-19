@@ -148,7 +148,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         \Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
+        \Collective\Html\HtmlServiceProvider::class,
         /*
          * Application Service Providers...
          */

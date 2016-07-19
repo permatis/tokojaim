@@ -47,7 +47,7 @@ class CartRepository
 		);
 	}
 
-	public function getContent($instance)
+	public static function getContent($instance)
 	{
 		return Cart::instance($instance)->content();
 	}
