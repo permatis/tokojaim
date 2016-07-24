@@ -1,3 +1,4 @@
+@include('user.partials.menu')
 <select>
 	<option>semua status</option>
 	<option>konfirmasi pembayaran</option>

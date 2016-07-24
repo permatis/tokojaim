@@ -1,3 +1,4 @@
+@include('user.partials.menu')
 <button id="konfirmasi">konfirmasi</button> <button>batal</button><br>
 
 tanggal transaksi dari tgl 18 januari 2016 => 20 januari 2016<br>

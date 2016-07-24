@@ -105,9 +105,9 @@ class FrontEndController extends Controller
      */
     public function checkout()
     {
-        if(count(request()-get('step')) > 0)
+        if(count(request()->get('step')) > 0)
         {
-            //step-step
+            dd(request()->get('step'));
         }
 
         return view('frontend.keranjang');

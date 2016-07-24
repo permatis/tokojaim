@@ -32,3 +32,4 @@
 	</tr>
 </table>
 @endif
+<a href="{{ url('checkout') }}">Checkout</a>

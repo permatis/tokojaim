@@ -1,0 +1,10 @@
+.fileinput-new > .pictures {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.fileinput-new > .pictures > i, 
+.fileinput-new > .pictures >span {
+    color: #eee;
+    width: 100%;
+}

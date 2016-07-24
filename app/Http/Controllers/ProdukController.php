@@ -17,7 +17,8 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        //
+        $produks = Produk::with('stok')->get();
+        return view('admin.produks.index', compact('produks'));
     }
 
     /**
@@ -27,8 +28,7 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        //
-        return view('admin.produk_create');
+        return view('admin.produks.create');
     }
 
     /**
@@ -46,7 +46,7 @@ class ProdukController extends Controller
             'berat' => 'required',
             'stok' => 'required|numeric',
             'deskripsi' => 'required',
-            ));
+        ));
 
         $stok = Stok::create(['jumlah' => $request->get('stok')]);
         
@@ -54,12 +54,9 @@ class ProdukController extends Controller
                     array_slice($request->all(), 0, -1), 
                     ['stok_id' => $stok->id] );
 
-
         Produk::create($data_stok);
-        
-        
 
-
+        return redirect('admin/produks');
     }
 
     /**
@@ -81,7 +78,8 @@ class ProdukController extends Controller
      */
     public function edit($id)
     {
-        //
+        $produk =  Produk::find($id);
+        return view('admin.produks.edit', compact('produk'));
     }
 
     /**
@@ -93,7 +91,19 @@ class ProdukController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, array(
+            'judul' => 'required',
+            'harga' => 'required',
+            'berat' => 'required',
+            'stok' => 'required|numeric',
+            'deskripsi' => 'required',
+            ));
+
+        $produk = Produk::find($id);
+        $produk->stok->update(['jumlah' => $request->get('stok')]);
+        $produk->update(array_slice($request->all(), 0, -1));
+        
+        return redirect('admin/produks');
     }
 
     /**
@@ -104,6 +114,9 @@ class ProdukController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $produk = Produk::find($id);
+        Stok::destroy($produk->stok_id);
+        Produk::destroy($id);
+        return redirect('admin/produks');
     }
 }

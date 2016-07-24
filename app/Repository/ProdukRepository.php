@@ -3,14 +3,17 @@
 namespace App\Repository;
 
 use App\Models\Produk;
+use App\Models\Kategori;
 
 class ProdukRepository
 {
 	private $produk;
+	private $kategori;
 
-	public function __construct(Produk $produk)
+	public function __construct(Produk $produk, Kategori $kategori)
 	{
 		$this->produk = $produk;
+		$this->kategori = $kategori;
 	}
 
 	public function get()
@@ -49,7 +52,7 @@ class ProdukRepository
 
     protected function getKategoriId($parent_id)
     {
-        $kategori = $this->kategori->where('parent_id', $parent_id)->get()->toArray();
+		$kategori = $this->kategori->where('parent_id', $parent_id)->get()->toArray();
 
         foreach ($kategori as $kat) {
             $k[] = $kat['id'];

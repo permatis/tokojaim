@@ -1,3 +1,4 @@
+@include('user.partials.menu')
 <table border="1">
 	<tr>
 		<td>
