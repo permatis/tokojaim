@@ -10,9 +10,18 @@
  */
 Route::get('/', 'FrontEndController@index');
 Route::get('kategori/{parent}/{child?}', 'FrontEndController@kategori');
-Route::get('produks', 'FrontEndController@search');
+// Route::get('produks', 'FrontEndController@search');
 Route::get('produk/{slug}', 'FrontEndController@detail');
-Route::get('checkout', 'FrontEndController@checkout');
+Route::get('produks', function() {
+	return view('frontend.produk');
+});
+Route::get('detail', function() {
+	return view('frontend.single');
+});
+Route::get('checkout', function() {
+	return view('frontend.checkout');
+});
+// Route::get('checkout', 'FrontEndController@checkout');
 
 /**
  * Route untuk keranjang belanja & checkout
@@ -30,6 +39,7 @@ Route::get('admin/dashboard', function () {
 Route::resource('admin/produks','ProdukController');
 Route::resource('admin/kategori','KategoriController');
 Route::resource('admin/tags','TagController');
+Route::resource('admin/brands','TagController');
 
 Route::get('/u/favorit','UserController@favorit');
 Route::get('/u/pembelian/','UserController@konfirmasi_pembayaran'); //sudah

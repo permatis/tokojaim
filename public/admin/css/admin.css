@@ -8,3 +8,9 @@
     color: #eee;
     width: 100%;
 }
+
+.skin-purple .main-header .navbar,
+.skin-purple .main-header .navbar .sidebar-toggle:hover,
+.skin-purple .main-header .logo {
+	background: #615c85 !important;
+}

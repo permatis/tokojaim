@@ -1,130 +1,145 @@
-<<<<<<< HEAD
 @extends('frontend.partials.main')
 
 @section('content')
+@include('frontend.partials.banner')
 
+	<div class="content-top">
+		<h2 class="new">NEW ARRIVALS</h2>
+		<div class="pink">
+			<div id="owl-demo" class="owl-carousel text-center">
+				<div class="item">
+					<div class=" box-in">
+						<div class=" grid_box">
+							<a href="single.html"> 
+								<img src="{{ URL::asset('assets/images/pi.jpg') }}" class="img-responsive" alt="">
+								<h5>fuel t-shirt  mod : 9509</h5>
+							</a> 	
+					    </div>
+			    		<div class="grid_1 simpleCart_shelfItem">
+			    			<a href="#" class="cup item_add"><span class=" item_price" >123 $ <i> </i> </span></a>					
+						</div>
+					</div>
+				</div>
 
-<div class="banner">
-<div class="container">
-<section class="rw-wrapper">
-				<h1 class="rw-sentence">
-					<span>Fashion &amp; Beauty</span>
-					<div class="rw-words rw-words-1">
-						<span>Beautiful Designs</span>
-						<span>Sed ut perspiciatis</span>
-						<span> Totam rem aperiam</span>
-						<span>Nemo enim ipsam</span>
-						<span>Temporibus autem</span>
-						<span>intelligent systems</span>
+				<div class="item">
+					<div class=" box-in">
+						<div class=" grid_box">		
+							<a href="single.html" >
+								<img src="{{ URL::asset('assets/images/pi12.jpg') }}" class="img-responsive" alt="">
+							</a> 	
+		           		</div>
+		           		<div class="grid_1 simpleCart_shelfItem">
+							<a href="#" class="cup item_add"><span class=" item_price" >123 $ <i> </i> </span></a>					
+						</div>
 					</div>
-					<div class="rw-words rw-words-2">
-						<span>We denounce with right</span>
-						<span>But in certain circum</span>
-						<span>Sed ut perspiciatis unde</span>
-						<span>There are many variation</span>
-						<span>The generated Lorem Ipsum</span>
-						<span>Excepteur sint occaecat</span>
-					</div>
-				</h1>
-			</section>
+				</div>
+				<div class="clearfix"> </div>
 			</div>
-</div>
-	<!--content-->
-		<div class="content">
-			<div class="container">
-
-				<!--products-->
-			<div class="content-mid">
-				<h3>Trending Items</h3>
-				<label class="line"></label>
-				<div class="mid-popular">
-
-          {{-- content produk --}}
-	         @foreach($produk as $p)
-
-
-					<div class="col-md-3 item-grid simpleCart_shelfItem">
-					<div class=" mid-pop">
-					<div class="pro-img">
-						<img src="asset/images/pc.jpg" class="img-responsive" alt="">
-						<div class="zoom-icon ">
-						<a class="picture" href="asset/images/pc.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox"><i class="glyphicon glyphicon-search icon "></i></a>
-						<a href="single.html"><i class="glyphicon glyphicon-menu-right icon"></i></a>
-						</div>
-						</div>
-						<div class="mid-1">
-						<div class="women">
-						<div class="women-top">
-							<span>Women</span>
-							<h6><a href="{{ url('produk/'.$p->slug) }}">{{ $p->judul }}</a></h6>
-							</div>
-							<div class="img item_add">
-								{{-- <a href="#"></a> --}}
-
-                <form action="{{ url('cart/tambah') }}" method="post">
-            			{!! csrf_field() !!}
-            			<input type="hidden" name="config_id" value="{{ $p->id }}">
-
-            			@if( $p->stok->jumlah != 0 )
-            				<input type="hidden" name="jumlah" min="1" max="{{ $p->stok->jumlah }}" value="1">
-            			@endif
-            			@if( $p->stok->jumlah != 0 )
-            			     <button type="submit" name="submit" value="belanja"><img src="asset/images/ca.png" alt=""></button>
-            			@else <b>Hub. CS</b> @endif
-            			{{-- <button type="submit" name="submit" value="favorit">tambah ke favorit</button> --}}
-            		</form>
-
-							</div>
-							<div class="clearfix"></div>
-							</div>
-							<div class="mid-2">
-								<p >Rp. {{ $p->harga }}</p>
-
-								</div>
-
-								<div class="clearfix"></div>
-							</div>
-
-						</div>
+		</div>
+	</div>
+	
+	<div class="content-middle">
+		<h2 class="middle">BEST SALES</h2>
+		<div class="col-best">
+			<div class="col-md-4">
+				<a href="single.html"><div class="col-in">
+					<div class="col-in-left">
+						<img src="{{ URL::asset('assets/images/ni.jpg') }}" class="img-responsive" alt="">
 					</div>
+					</a>
+					<div class="col-in-right grid_1 simpleCart_shelfItem">
+						<h5>fuel t-shirt  mod : 9509</h5>
+						<ul class="star">
+							<li><a href="#"><i> </i> </a> </li>
+							<li><a href="#"><i> </i> </a> </li>
+							<li><a href="#"><i> </i> </a> </li>
+							<li><i class="in-star"> </i>  </li>
+						</ul>
+						<!---->
+						<a href="#" class="item_add"><span class="white item_price" >123 $ <i> </i> </span></a>
+						<!---->
 					</div>
-
-          @endforeach
-
-					@include('frontend.partials.keranjang')
-          {{-- end content produk --}}
-
-					<div class="clearfix"></div>
+					<div class="clearfix"> </div>
 				</div>
 			</div>
-			<!--//products-->
+			<div class="col-md-4">
+				<a href="single.html"><div class="col-in">
+					<div class="col-in-left">
+						<img src="{{ URL::asset('assets/images/ni1.jpg') }}" class="img-responsive" alt="">
+					</div>
+					</a>
+					<div class="col-in-right grid_1 simpleCart_shelfItem">
+						<h5>fuel t-shirt  mod : 9509</h5>
+						<ul class="star">
+							<li><i> </i>  </li>
+							<li><i> </i>  </li>
+							<li><i> </i>  </li>
+							<li><i class="in-star"> </i>  </li>
+						</ul>
+						<!---->
+						<a href="#" class="item_add"><span class="white item_price" >123 $ <i> </i> </span></a>
+						<!---->
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<a href="single.html"><div class="col-in">
+					<div class="col-in-left">
+						<img src="{{ URL::asset('assets/images/ni.jpg') }}" class="img-responsive" alt="">
+					</div>
+					</a>
+					<div class="col-in-right grid_1 simpleCart_shelfItem">
+						<h5>fuel t-shirt  mod : 9509</h5>
+						<ul class="star">
+							<li><i> </i>  </li>
+							<li><i> </i>  </li>
+							<li><i> </i>  </li>
+							<li><i class="in-star"> </i>  </li>
+						</ul>
+						<!---->
+						<a href="#" class="item_add"><span class="white item_price" >123 $ <i> </i> </span></a>
+						<!---->
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+
+	<div class="content-bottom">
+		<div class="col-md-8 latter">
+			<h6>NEWSLETTER</h6>
+			<p>sign up now to our newsletter discount! to get the Welcome discount</p>
+			
+			<div class="clearfix"> </div>
+		</div>
+		<div class="col-md-4 latter-right">
+			
+				<form>
+				<div class="join">
+					<input type="text" value="your email here" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'your email here';}">
+					<i> </i>
+				</div>
+					<input type="submit" value="join us">
+				</form>
+				
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+
+	<div class="bottom-content">
+		<div class="col-md-4">
+			<img src="{{ URL::asset('assets/images/ad1.png') }}" class="img-responsive" alt="">
+		</div>
+		<div class="col-md-4">
+			<img src="{{ URL::asset('assets/images/ad1.png') }}" class="img-responsive" alt="">
+		</div>
+		<div class="col-md-4">
+			<img src="{{ URL::asset('assets/images/ad1.png') }}" class="img-responsive" alt="">
+		</div>
+		<div class="clearfix"> </div>
+	</div>
 
 @endsection
-=======
-<h1>All Product</h1>
-
-@include('frontend.partials.keranjang')
-
-<form action="{{ url('produks') }}">
-	<input type="text" name="search[keywords]" placeholder="Find produk here.">
-	<button type="submit"> Search</button>
-</form>
-
-<ul>
-	@foreach($produk as $p)
-	<li>
-		<h4><a href="{{ url('produk/'.$p->slug) }}">{{ $p->judul }}</a></h4>
-		<p>Harga: {{ $p->harga }}</p>
-		<p>Deskripsi: <br/>{{ $p->deskripsi }}</p>
-		<form action="{{ url('cart/tambah') }}" method="post">
-			{!! csrf_field() !!}
-			<input type="hidden" name="config_id" value="{{ $p->id }}">
-			Stok : {{ $p->stok->jumlah }} barang
-			<input type="number" name="jumlah" min="1" max="{{ $p->stok->jumlah }}" value="1"> 
-			<button type="submit" name="submit" value="belanja">tambah ke keranjang</button> 
-			<button type="submit" name="submit" value="favorit">tambah ke favorit</button>
-		</form>
-	</li>
-	@endforeach
-</ul>
->>>>>>> c1d254b794019644fb1bb86ff4d59b6edd359e8c

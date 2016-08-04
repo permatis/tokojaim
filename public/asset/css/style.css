@@ -2333,9 +2333,9 @@ td.add-check a {
 }
 }
 @media(max-width:320px){
-.banner {
-    height: 232px;
-    background-position-x: -225px;
-    background-size: 542px;
-}
+	.banner {
+	    height: 232px;
+	    background-position-x: -225px;
+	    background-size: 542px;
+	}
 }
