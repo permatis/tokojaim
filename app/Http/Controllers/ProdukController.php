@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Models\Produk;
+use App\Models\Kategori;
 use App\Models\Stok;
+use App\Models\Tag;
 
 class ProdukController extends Controller
 {
@@ -28,7 +30,9 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        return view('admin.produks.create');
+        $kategori = Kategori::where('parent_id', 0)->orderBy('nama', 'ASC')->get();
+
+        return view('admin.produks.create', compact('kategori'));
     }
 
     /**
@@ -39,24 +43,43 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $this->validate($request, array(
-            'judul' => 'required',
+            'nama' => 'required',
+            'kategori' => 'required',
+            'deskripsi' => 'required',
+            'gambar' => 'required',
             'harga' => 'required',
             'berat' => 'required',
             'stok' => 'required|numeric',
             'deskripsi' => 'required',
+            'tag' => 'required'
         ));
 
+        //deskripsikan inputan
+        $tags = Tag::all()->toArray();
+        $inputTag = explode(',', $request->get('tag'));
+        $dataProduk = [
+            'judul' =>  $request->get('judul'),
+            'slug'  => str_slug($request->get('judul'), '-'),
+            'deskripsi' => $request->get('deskripsi'),
+            'berat' => $request->get('berat'),
+            'harga' => $request->get('harga')
+        ];
+
+        //menambahkan data stok dan data produk
         $stok = Stok::create(['jumlah' => $request->get('stok')]);
-        
-        $data_stok = array_merge( 
-                    array_slice($request->all(), 0, -1), 
-                    ['stok_id' => $stok->id] );
+        $produk = Produk::create(array_merge($dataProduk, ['stok_id' => $stok->id]));
 
-        Produk::create($data_stok);
+        //jika tag sudah ada, tambahkan id tag ke relasi produk
+        $this->relatedTag($inputTag, $tags, $produk);
 
-        return redirect('admin/produks');
+        //jika tag belum ada, buat tag dan tambah ke relasi produk
+        foreach($this->getTag($inputTag, $tags) as $val) {
+            $tag = Tag::create(['nama'=> $val]);
+            $produk->tag()->attach($tag);
+        }
+
+        // return redirect('admin/produks');
     }
 
     /**
@@ -118,5 +141,24 @@ class ProdukController extends Controller
         Stok::destroy($produk->stok_id);
         Produk::destroy($id);
         return redirect('admin/produks');
+    }
+
+    private function getTag($input, $tags)
+    {
+        $newTags = [];
+        foreach ($input as $tag) {
+            if(in_array($tag, array_flatten($tags))) continue;
+            $newTags[] = $tag;
+        }        
+        return $newTags;
+    }
+
+    private function relatedTag($input, $tags, $relation)
+    {
+        foreach($tags as $key => $tag) {
+            foreach($input as $k => $arr) {
+                if($arr === $tag['nama']) $relation->tag()->attach([$tag['id']]);
+            }
+        }
     }
 }

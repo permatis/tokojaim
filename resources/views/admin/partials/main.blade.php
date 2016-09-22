@@ -20,6 +20,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ URL::asset('admin/dist/fileinput/css/fileinput.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/dist/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/dist/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/dist/selectize.js/dist/css/selectize.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('admin/dist/selectize.js/dist/css/selectize.bootstrap3.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/css/admin.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/dist/admin-lte/dist/css/AdminLTE.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/dist/admin-lte/dist/css/skins/_all-skins.css') }}">
@@ -54,17 +56,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- jQuery 2.1.4 -->
     <script src="{{ URL::asset('admin/dist/jquery/dist/jquery.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script> --}}
     <!-- Bootstrap 3.3.5 -->
     <script src="{{ URL::asset('admin/dist/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ URL::asset('admin/dist/admin-lte/dist/js/app.min.js') }}"></script>
     <script src="{{ URL::asset('admin/dist/fileinput/js/fileinput.min.js') }}"></script>
     <script src="{{ URL::asset('admin/dist/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/microplugin.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/sifter.min.js') }}"></script>
     <script src="{{ URL::asset('admin/dist/select2/select2.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/dist/selectize.js/dist/js/selectize.js') }}"></script>
     <script>
+
   $(function () {
-    $('#rupiah2').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+
+
+    // $('#rupiah2').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
     $("#textarea").wysihtml5();
     $("#gambar").fileinput({
         showUpload: false,
@@ -72,13 +80,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
         allowedFileExtensions: ["png", "jpg", "jpeg"]
     });
 
-    $(".kategori").select2();
+    if('select[id^="kategori"]') {
+        $('select').each( function(i,v) {
+            $('#'+$(this).attr('id')).select2();
+        });
 
-    $("#rupiah2").keyup(function() {
-    var clone = $(this).val();
-    var cloned = clone.replace(/[A-Za-z$. ,-]/g, "");
-    $("#rupiah").val(cloned);
-    });    
+    }
+
+    $("#tags").selectize({
+        delimiter: ',',
+        persist: false,
+        create: function(input) {
+            return {
+                value: input,
+                text: input
+            }
+        },
+        render: {
+            option_create: function(data, escape) {
+              return '<div class="create">Tambahkan tag baru "' + escape(data.input) + '"</div>';
+            }
+        },
+        plugins: {
+            'remove_button': { 'title': 'Hapus' }
+        }
+        // plugins: ['remove_button']
+    });
+
+    // $("#rupiah2").keyup(function() {
+    //     var clone = $(this).val();
+    //     var cloned = clone.replace(/[A-Za-z$. ,-]/g, "");
+    //     $("#rupiah").val(cloned);
+    // });
   });
 </script>
   </body>

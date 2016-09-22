@@ -7,7 +7,7 @@
 				<ul id="etalage">
 					<li>
 						<a href="optionallink.html">
-							<img class="etalage_thumb_image img-responsive" src="{{ URL::asset('assets/images/si.jpg') }}" alt="" >
+							<img class="etalage_thumb_image img-responsive" src="{{ URL::asset('assets/images/s1.jpg') }}" alt="" >
 							<img class="etalage_source_image img-responsive" src="{{ URL::asset('assets/images/s1.jpg') }}" alt="" >
 						</a>
 					</li>
@@ -16,11 +16,11 @@
 						<img class="etalage_source_image img-responsive" src="{{ URL::asset('assets/images/s2.jpg') }}" alt="" >
 					</li>
 					<li>
-						<img class="etalage_thumb_image img-responsive" src="{{ URL::asset('assets/images/si2.jpg') }}" alt=""  >
+						<img class="etalage_thumb_image img-responsive" src="{{ URL::asset('assets/images/s2.jpg') }}" alt=""  >
 						<img class="etalage_source_image img-responsive" src="{{ URL::asset('assets/images/s3.jpg') }}" alt="" >
 					</li>
 				    <li>
-						<img class="etalage_thumb_image img-responsive" src="{{ URL::asset('assets/images/si3.jpg') }}"  alt="" >
+						<img class="etalage_thumb_image img-responsive" src="{{ URL::asset('assets/images/s3.jpg') }}"  alt="" >
 						<img class="etalage_source_image img-responsive" src="{{ URL::asset('assets/images/s4.jpg') }}" alt="" >
 					</li>
 				</ul>
