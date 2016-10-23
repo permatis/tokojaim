@@ -1,2 +1,3 @@
-         <!-- Default to the left -->
-        <strong>Copyright &copy; 2016 <a href="http://boskios.com">boskios.com</a>.</strong> 
+<footer class="main-footer">
+    <strong>Copyright © 2016 <a href="">Toko Online</a>.</strong> All rights reserved.
+</footer>

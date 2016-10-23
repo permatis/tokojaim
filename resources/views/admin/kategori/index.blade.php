@@ -12,12 +12,13 @@
             </div>
         </div>
         <div class="box-body">
-			<table class="table no-margin" id="table">
+			<table class="table no-margin table-bordered table-hover" id="table">
             	<thead>
             		<tr>
             			<th>Nama</th>
             			<th>Deskripsi</th>
             			<th>Parent Kategori</th>
+						<th>Updated</th>
             			<th>Action</th>
             		</tr>
             	</thead>
@@ -29,9 +30,10 @@
             			<?php $kat = \App\Models\Kategori::where('id', $kategori->parent_id)->first(); ?>
             			@if(!empty($kat))
             			<td>{{ $kat->nama }}</td>
-            			@else 
+            			@else
             			<td>-</td>
             			@endif
+						<td>{{ $kategori->updated_at->diffForHumans() }}</td>
             			<td>
 							<div class="btn-group">
 								<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
@@ -45,7 +47,7 @@
 									</a></li>
 								</ul>
 							</div>
-							
+
 							<!-- Modal -->
 							<div class="modal fade delete{{ $kategori->id }}"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 								<div class="modal-dialog" role="document">

@@ -12,10 +12,11 @@
             </div>
         </div>
         <div class="box-body">
-			<table class="table no-margin" id="table">
+			<table class="table no-margin table-bordered table-hover" id="table">
             	<thead>
             		<tr>
             			<th>Nama</th>
+						<th>Updated</th>
             			<th>Action</th>
             		</tr>
             	</thead>
@@ -23,6 +24,7 @@
             	@foreach($tags as $tag)
             		<tr>
             			<td>{{ $tag->nama }}</td>
+            			<td>{{ $tag->updated_at->diffForHumans() }}</td>
             			<td>
 							<div class="btn-group">
 								<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
@@ -36,7 +38,7 @@
 									</a></li>
 								</ul>
 							</div>
-							
+
 							<!-- Modal -->
 							<div class="modal fade delete{{ $tag->id }}"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 								<div class="modal-dialog" role="document">

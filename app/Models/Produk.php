@@ -10,17 +10,18 @@ class Produk extends Model
 	protected $table = 'produk';
 
     protected $fillable = [
-    	'judul', 'slug', 'berat', 'deskripsi', 'harga', 'stok_id'
+    	'judul', 'slug', 'berat', 'deskripsi', 'harga', 'stok'
     ];
+
+    public function setJudulAttribute($value)
+    {
+        $this->attributes['judul'] = $value;
+        $this->attributes['slug'] = str_slug($value);
+    }
 
     public function user()
     {
     	return $this->belongsToMany(\App\Models\User::class, 'user_produk');
-    }
-
-    public function stok()
-    {
-    	return $this->belongsTo(\App\Models\Stok::class);
     }
 
     public function gambar()
@@ -28,19 +29,20 @@ class Produk extends Model
     	return $this->belongsToMany(\App\Models\Gambar::class, 'produk_gambar');
     }
 
-    public function grosir()
-    {
-    	return $this->hasMany(\App\Models\Grosir::class, 'grosir');
-    }
-
     public function tag()
     {
-    	return $this->belongsToMany(\App\Models\Tag::class, 'produk_tag');
+        return $this->belongsToMany(\App\Models\Tag::class, 'produk_tag');
     }
 
     public function kategori()
     {
-    	return $this->belongsToMany(\App\Models\Kategori::class, 'produk_kategori');
+        return $this->belongsToMany(\App\Models\Kategori::class, 'produk_kategori')
+            ->withPivot('kategori_id');
+    }
+
+    public function grosir()
+    {
+    	return $this->hasMany(\App\Models\Grosir::class, 'grosir');
     }
 
     public function brand()
@@ -63,5 +65,16 @@ class Produk extends Model
         return $this->belongsToMany(\App\Models\Produk::class, 'favorit');
     }
 
+    protected static function boot() 
+    {
+        parent::boot();
+
+        static::deleting(function($produk) { // before delete() method call this
+             $produk->gambar()->delete();
+             $produk->tag()->delete();
+             $produk->kategori()->delete();
+             // do the rest of the cleanup...
+        });
+    }
 
 }

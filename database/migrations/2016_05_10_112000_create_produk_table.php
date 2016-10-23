@@ -19,10 +19,7 @@ class CreateProdukTable extends Migration
             $table->string('berat', 5);
             $table->string('deskripsi');
             $table->integer('harga');
-            $table->integer('stok_id')->unsigned();
-            $table->foreign('stok_id')->references('id')->on('stok')
-                ->onUpdate('cascade')->onDelete('cascade');
-
+            $table->integer('stok');
             $table->timestamps();
         });
     }

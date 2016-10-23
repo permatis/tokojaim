@@ -3,15 +3,43 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\Http\Requests\ProductRequest;
 use App\Models\Produk;
 use App\Models\Kategori;
-use App\Models\Stok;
 use App\Models\Tag;
+use App\Repository\TagRepository;
+use App\Services\AllRequestService;
+use App\Repository\ImageRepository;
 
 class ProdukController extends Controller
 {
+    private $tags;
+    private $produk;
+    private $kategori;
+    private $tag;
+    private $request;
+    private $image;
+
+    /**
+     * Konstruktor for ProdukController
+     */
+    public function __construct(
+        TagRepository $tags,
+        Produk $produk,
+        Kategori $kategori,
+        Tag $tag,
+        AllRequestService $request,
+        ImageRepository $image
+    )
+    {
+        $this->tags = $tags;
+        $this->produk = $produk;
+        $this->kategori = $kategori;
+        $this->tag = $tag;
+        $this->request = $request;
+        $this->image = $image;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +47,7 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        $produks = Produk::with('stok')->get();
+        $produks = $this->produk->orderBy('updated_at', 'DESC')->get();
         return view('admin.produks.index', compact('produks'));
     }
 
@@ -30,9 +58,11 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        $kategori = Kategori::where('parent_id', 0)->orderBy('nama', 'ASC')->get();
+        $kategori = $this->kategori->where('parent_id', 0)->orderBy('nama', 'ASC')->get();
+        $tags = $this->tag->get(['nama']);
+        $tag = ($tags) ? json_encode($tags) : '';
 
-        return view('admin.produks.create', compact('kategori'));
+        return view('admin.produks.create', compact('kategori', 'tag'));
     }
 
     /**
@@ -41,45 +71,23 @@ class ProdukController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $this->validate($request, array(
-            'nama' => 'required',
-            'kategori' => 'required',
-            'deskripsi' => 'required',
-            'gambar' => 'required',
-            'harga' => 'required',
-            'berat' => 'required',
-            'stok' => 'required|numeric',
-            'deskripsi' => 'required',
-            'tag' => 'required'
-        ));
+        $produk = $this->produk->create( $this->request->produks($request) );
 
-        //deskripsikan inputan
-        $tags = Tag::all()->toArray();
-        $inputTag = explode(',', $request->get('tag'));
-        $dataProduk = [
-            'judul' =>  $request->get('judul'),
-            'slug'  => str_slug($request->get('judul'), '-'),
-            'deskripsi' => $request->get('deskripsi'),
-            'berat' => $request->get('berat'),
-            'harga' => $request->get('harga')
-        ];
+        $this->tags->saveWithRelation(
+            explode(',', $request->get('tag')),
+            $this->tag->get(['id','nama']),
+            $produk
+        );
 
-        //menambahkan data stok dan data produk
-        $stok = Stok::create(['jumlah' => $request->get('stok')]);
-        $produk = Produk::create(array_merge($dataProduk, ['stok_id' => $stok->id]));
+        $produk->kategori()->attach($request->get('kategori'));
 
-        //jika tag sudah ada, tambahkan id tag ke relasi produk
-        $this->relatedTag($inputTag, $tags, $produk);
+        $this->image->save(
+            $request->file('gambar'), $produk
+        );
 
-        //jika tag belum ada, buat tag dan tambah ke relasi produk
-        foreach($this->getTag($inputTag, $tags) as $val) {
-            $tag = Tag::create(['nama'=> $val]);
-            $produk->tag()->attach($tag);
-        }
-
-        // return redirect('admin/produks');
+        return redirect('admin/produks');
     }
 
     /**
@@ -101,8 +109,12 @@ class ProdukController extends Controller
      */
     public function edit($id)
     {
-        $produk =  Produk::find($id);
-        return view('admin.produks.edit', compact('produk'));
+        $produk =  $this->produk->find($id);
+        $kategori = $this->kategori->where('parent_id', 0)->orderBy('nama', 'ASC')->get();
+        $tags = $this->tag->get(['id','nama']);
+        $tag = ($tags) ? json_encode($tags) : '';
+
+        return view('admin.produks.edit', compact('produk', 'kategori', 'tag'));
     }
 
     /**
@@ -114,18 +126,25 @@ class ProdukController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, array(
-            'judul' => 'required',
-            'harga' => 'required',
-            'berat' => 'required',
-            'stok' => 'required|numeric',
-            'deskripsi' => 'required',
-            ));
+        $produk = $this->produk->find($id);
 
-        $produk = Produk::find($id);
-        $produk->stok->update(['jumlah' => $request->get('stok')]);
-        $produk->update(array_slice($request->all(), 0, -1));
-        
+        $fileimages = $request->file('gambar');
+        if( $fileimages ) {
+            $this->image->deleteByRelation($produk);
+            $this->image->save( $request->file('gambar'), $produk );
+        }
+
+       $produk->kategori()->sync([$request->get('kategori')]);
+
+        $produk->tag()->detach();
+        $this->tags->saveWithRelation(
+            explode(',', $request->get('tag')),
+            $this->tag->get(['id','nama']),
+            $produk
+        );
+
+        $produk->update( $this->request->produks($request) );
+
         return redirect('admin/produks');
     }
 
@@ -137,28 +156,14 @@ class ProdukController extends Controller
      */
     public function destroy($id)
     {
-        $produk = Produk::find($id);
-        Stok::destroy($produk->stok_id);
-        Produk::destroy($id);
+        $produk = $this->produk->find($id);
+        $this->image->deleteByRelation($produk);
+        $produk->tag()->detach();
+        $produk->kategori()->detach();
+        $this->produk->destroy($id);
+
         return redirect('admin/produks');
     }
 
-    private function getTag($input, $tags)
-    {
-        $newTags = [];
-        foreach ($input as $tag) {
-            if(in_array($tag, array_flatten($tags))) continue;
-            $newTags[] = $tag;
-        }        
-        return $newTags;
-    }
 
-    private function relatedTag($input, $tags, $relation)
-    {
-        foreach($tags as $key => $tag) {
-            foreach($input as $k => $arr) {
-                if($arr === $tag['nama']) $relation->tag()->attach([$tag['id']]);
-            }
-        }
-    }
 }

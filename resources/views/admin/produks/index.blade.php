@@ -12,13 +12,14 @@
             </div>
         </div>
         <div class="box-body">
-			<table class="table no-margin" id="table">
+			<table class="table no-margin table-bordered table-hover" id="table">
             	<thead>
             		<tr>
             			<th>Produk</th>
             			<th>Harga</th>
             			<th>Stok</th>
-            			<th>Tanggal</th>
+            			<th>Update</th>
+            			<th>Action</th>
             		</tr>
             	</thead>
             	<tbody>
@@ -26,7 +27,7 @@
             		<tr>
             			<td>{{ $produk->judul }}</td>
             			<td>{{ $produk->harga }}</td>
-            			<td>{{ $produk->stok->jumlah }}</td>
+            			<td>{{ $produk->stok }}</td>
             			<td>{{ $produk->updated_at->diffForHumans() }}</td>
             			<td>
 							<div class="btn-group">
@@ -41,7 +42,7 @@
 									</a></li>
 								</ul>
 							</div>
-							
+
 							<!-- Modal -->
 							<div class="modal fade delete{{ $produk->id }}"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 								<div class="modal-dialog" role="document">

@@ -8,6 +8,15 @@ use App\Models\Kategori;
 
 class KategoriController extends Controller
 {
+    protected $kategori;
+
+    public function __construct(
+        Kategori $kategori
+    )
+    {
+        $this->kategori = $kategori;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +24,7 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        $kategoris = Kategori::all();
+        $kategoris = $this->kategori->orderBy('updated_at', 'DESC')->get();
 
         return view('admin.kategori.index', compact('kategoris'));
     }
@@ -27,7 +36,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        $parent_id = Kategori::where('parent_id', 0)->orderBy('nama', 'ASC')->get();
+        $parent_id = $this->kategori->where('parent_id', 0)->orderBy('nama', 'ASC')->get();
 
         return view('admin.kategori.create', compact('parent_id'));
     }
@@ -45,7 +54,7 @@ class KategoriController extends Controller
             'deskripsi' => 'required',
         ));
 
-        Kategori::create($request->all());
+        $this->kategori->create($request->all());
 
         return redirect('admin/kategori');
     }
@@ -69,8 +78,8 @@ class KategoriController extends Controller
      */
     public function edit($id)
     {
-        $kategori = Kategori::find($id);
-        $parent_id = Kategori::where('parent_id', 0)->orderBy('nama', 'ASC')->get();
+        $kategori = $this->kategori->find($id);
+        $parent_id = $this->kategori->where('parent_id', 0)->orderBy('nama', 'ASC')->get();
 
         return view('admin.kategori.edit', compact('kategori', 'parent_id'));
     }
@@ -89,7 +98,7 @@ class KategoriController extends Controller
             'deskripsi' => 'required'
         ));
 
-        $kategori = Kategori::find($id);
+        $kategori = $this->kategori->find($id);
         $kategori->update($request->all());
 
         return redirect('admin/kategori');
@@ -103,7 +112,10 @@ class KategoriController extends Controller
      */
     public function destroy($id)
     {
-        Kategori::destroy($id);   
+        $kategori = $this->kategori->find($id);
+        $kategori->produk()->detach();
+        $this->kategori->destroy($id);
+        
         return redirect('admin/kategori');
     }
 }

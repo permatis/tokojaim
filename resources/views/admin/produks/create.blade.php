@@ -8,15 +8,17 @@
             </div>				
 			<div class="box-body">
 
-				<div class="form-group{{ $errors->has('nama') ? ' has-error' : '' }}">
+				<div class="form-group{{ $errors->has('judul') ? ' has-error' : '' }}">
 					<label>Nama Produk</label>
-					<input name="judul" class="form-control" placeholder="Masukkan nama produk" type="text">		
-					</input>
+					<input name="judul" class="form-control" placeholder="Masukkan nama produk" type="text" value="{{ old('judul') }}">
+                    @if ($errors->has('judul'))
+                        <span class="text-danger">{{ $errors->first('judul') }}</span>
+                    @endif
 				</div>
                 
                 <div class="form-group{{ $errors->has('kategori') ? ' has-error' : '' }}">
                     <label for="kategori">Kategori</label>
-                    <select name="kat_id" class="form-control" id="kategori">
+                    <select name="kategori" class="form-control" id="kategori">
                         <option value="">Pilih Kategori</option>
                         @foreach($kategori as $kat)
                         @if(!empty($kat->id))
@@ -45,17 +47,25 @@
                         @endif
                         @endforeach
                     </select>
+                    @if ($errors->has('kategori'))
+                        <span class="text-danger">{{ $errors->first('kategori') }}</span>
+                    @endif
                 </div>
 				
 				<div class="form-group{{ $errors->has('deskripsi') ? ' has-error' : '' }}">
 					<label>Deskripsi Produk</label>
-					<textarea name="deskripsi" class="form-control" id="textarea" rows="8"></textarea>
-					</input>
+					<textarea name="deskripsi" class="form-control" id="textarea" rows="8">{{ old('deskripsi') }}</textarea>
+                    @if ($errors->has('deskripsi'))
+                        <span class="text-danger">{{ $errors->first('deskripsi') }}</span>
+                    @endif
 				</div>
-                    
-                <div class="form-group{{ $errors->has('gambar') ? ' has-error' : '' }}">
+                  
+                <div class="form-group{{ $errors->has('gambar.0') ? ' has-error' : '' }}">
                     <label class="control-label">Gambar Produk</label>
-                    <input id="gambar" type="file" multiple="true" name="gambar[]">
+                    <input id="gambar" type="file" name="gambar[]" multiple>
+                    @if ($errors->has('gambar.0'))
+                        <span class="text-danger">{{ $errors->first('gambar.0') }}</span>
+                    @endif
                 </div>
 
                 <div class="row">
@@ -63,30 +73,41 @@
                         <div class="form-group{{ $errors->has('berat') ? ' has-error' : '' }}">
                             <label>Perkiraan berat</label>
                             <div class="input-group">
-                                <input name="berat" class="form-control" placeholder="berat" type="text">
+                                <input name="berat" class="form-control" placeholder="berat" type="text"value="{{ old('berat') }}">
                                     <span class="input-group-addon">kg</span>
                                 </input>
                             </div>
+                            @if ($errors->has('berat'))
+                                <span class="text-danger">{{ $errors->first('berat') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group{{ $errors->has('stok') ? ' has-error' : '' }}">
                             <label>Stok</label>
-                            <input name="stok" class="form-control" placeholder="stok" type="text">
-                            </input>
+                            <input name="stok" class="form-control" placeholder="stok" type="text" value="{{ old('stok') }}">
+                            @if ($errors->has('stok'))
+                                <span class="text-danger">{{ $errors->first('stok') }}</span>
+                            @endif
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group{{ $errors->has('harga') ? ' has-error' : '' }}">
                     <label>Harga</label>
-                    <input name="harga" id="rupiah" class="form-control" placeholder="harga" type="hidden">
-                    <input id="rupiah2" class="form-control" placeholder="harga" type="text">
+                    <input id="rupiah" class="form-control" placeholder="harga" type="hidden">
+                    <input id="rupiah2" class="form-control" placeholder="harga" type="text" name="harga" value="{{ old('harga') }}">
+                    @if ($errors->has('harga'))
+                        <span class="text-danger">{{ $errors->first('harga') }}</span>
+                    @endif
                 </div>
 
                 <div class="form-group{{ $errors->has('tag') ? ' has-error' : '' }}">
                     <label>Tags</label>
                     <input name="tag" class="form-control" placeholder="Pilih tag" type="text" id="tags"/>
+                    @if ($errors->has('tag'))
+                        <span class="text-danger">{{ $errors->first('tag') }}</span>
+                    @endif
                 </div>
 
             </div>
@@ -99,5 +120,38 @@
             </div>
 		</div>
     {!! Form::close() !!}
-
+    @push('script-tag')
+    <script>
+        $("#tags").selectize({
+            delimiter: ',',
+            maxItems: 5,
+            valueField: 'nama',
+            labelField: 'nama',
+            searchField: ['nama'],
+            preload: true,
+            options: {!! $tag !!},
+            create: function (input, callback) {
+                    return { "nama": input };
+            },
+            render: {
+                option: function (item, escape) {
+                    return '<div>' + escape(item.nama) + '</div>';
+                }
+            },
+            plugins: {
+                'remove_button': { 'title': 'Hapus' }
+            }
+        });
+    </script>
+    @endpush
+    
+    @push('script-images')
+    <script type="text/javascript"> 
+        $("#gambar").fileinput({
+            showUpload: false,
+            maxFileCount: 5,
+            allowedFileExtensions: ["png", "jpg", "jpeg"]
+        });
+    </script>
+    @endpush
 @endsection

@@ -62,22 +62,6 @@
                 </ul>
             </li>
 
-            <li class="treeview @if(request()->segment(2) == 'brands') active @endif">
-                <a href="#">
-                    <i class="fa fa-cube"></i>
-                    <span>Brands</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li @if(request()->segment(2) == 'brands' && request()->segment(3) != 'create') class="active" @endif>
-                        {!! link_to('admin/brands', 'List Brands') !!}
-                    </li>
-                    <li @if(request()->segment(2) == 'brands' && request()->segment(3) == 'create') class="active" @endif>
-                        {!! link_to('admin/brands/create', 'Tambah Brands') !!}
-                    </li>
-                </ul>
-            </li>
-
             <li class="treeview @if(request()->segment(2) == 'transaksi') active @endif">
                 <a href="#">
                     <i class="fa fa-area-chart"></i>

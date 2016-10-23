@@ -32,10 +32,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  
+
 <body class="skin-purple sidebar-mini">
     <div class="wrapper">
-    
+
         @include('admin.partials.header')
         @include('admin.partials.sidebar')
 
@@ -43,14 +43,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <section class="content-header">
                 <h1>@yield('title-page')</h1>
             </section>
-            
+
             <section class="content">
                 @yield('content')
             </section>
         </div>
 
-    </div>
+        @include('admin.partials.footer')
 
+    </div>
 
     <!-- REQUIRED JS SCRIPTS -->
 
@@ -67,29 +68,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ URL::asset('admin/js/sifter.min.js') }}"></script>
     <script src="{{ URL::asset('admin/dist/select2/select2.min.js') }}"></script>
     <script src="{{ URL::asset('admin/dist/selectize.js/dist/js/selectize.js') }}"></script>
+    @stack('script-tag')
+    @stack('script-images')
+    @stack('script-select2')
     <script>
 
   $(function () {
-
-
     // $('#rupiah2').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
     $("#textarea").wysihtml5();
-    $("#gambar").fileinput({
-        showUpload: false,
-        maxFileCount: 4,
-        allowedFileExtensions: ["png", "jpg", "jpeg"]
-    });
 
     if('select[id^="kategori"]') {
         $('select').each( function(i,v) {
             $('#'+$(this).attr('id')).select2();
         });
-
     }
 
-    $("#tags").selectize({
+    $("#tag").selectize({
         delimiter: ',',
-        persist: false,
         create: function(input) {
             return {
                 value: input,
@@ -104,7 +99,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         plugins: {
             'remove_button': { 'title': 'Hapus' }
         }
-        // plugins: ['remove_button']
     });
 
     // $("#rupiah2").keyup(function() {
