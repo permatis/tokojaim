@@ -46,10 +46,14 @@ class FrontEndController extends Controller
      */
     public function kategori($parent, $child = null)
     {
-        $kat = $this->kategori->where('nama', str_slug($parent, '-'))->first();
+        $parent = str_replace('-', ' ', $parent);
+        $child = str_replace('-', ' ', $child);
+
+        $kat = $this->kategori->where('nama', $parent)->first();
+        $kategoris = $this->kategori->where('parent_id', '')->get();
 
         $kategori = ($child) ?
-                    $this->kategori->where('nama', str_slug($child, '-'))
+                    $this->kategori->where('nama', $child)
                         ->where('parent_id', $kat->id)->first() :
                     $kat;
 
@@ -60,7 +64,7 @@ class FrontEndController extends Controller
 
         $produks = $this->produk->getProdukByKategori($kategori);
 
-        return view('frontend.kategori', compact('produks'));
+        return view('themes.shoppe.kategori-produk', compact('produks', 'kategoris'));
     }
 
     /**
@@ -96,8 +100,16 @@ class FrontEndController extends Controller
     {
         $produk = $this->produk->find($slug, 'slug');
 
+        $parent_id = $produk->kategori[0]->parent_id;
+        if($parent_id) { 
+            $parent = $this->kategori->find($parent_id);
+            $kategori_link = strtolower(url('kategori/'.$parent->nama.'/'.$produk->kategori[0]->nama));
+        } else {
+            $kategori_link = strtolower(url('kategori/'.$produk->kategori[0]->nama));
+        }
+
         return ($produk) ?
-            view('themes.shoppe.detail-produk', compact('produk')) :
+            view('themes.shoppe.detail-produk', compact('produk', 'kategori_link')) :
             abort(404);
     }
 

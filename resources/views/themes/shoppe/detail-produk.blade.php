@@ -28,20 +28,19 @@
 		                </div>
 		                <div class="desc span_3_of_2">
 		                    <h2>{{ $produk->judul }}</h2>
-		                    <div class="price">
-		                        <p>Price: <span>{{ number_format($produk->harga, 0, '', '.') }}</span></p>
-		                    </div>
 		                    <div class="available">
-		                        <p>Available Options :</p>
-		                        <ul>
-		                            <li>Quality:<select>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select></li>
-		                        </ul>
+			                    <div class="price">
+			                        <p>Harga : <span>{{ number_format($produk->harga, 0, '', '.') }}</span></p>
+			                    </div>
+			                    <p>Kategori :  <a href="{{ $kategori_link }}">{{ $produk->kategori[0]->nama }}</a></p>
+			                    <p>Jumlah : 
+			                    	<select>
+	                            		@for($i = 1; $i < 10; $i++)
+										<option>{{ $i }}</option>
+										@endfor
+									</select>
+								</p>
+			                        
 		                    </div>
 		                    <div class="share-desc">
 								<div class="button"><span><a href="#">Add to Cart</a></span></div>					
