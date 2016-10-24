@@ -50,37 +50,3 @@ Route::get('/u/pembelian/history','UserController@history'); //sudah
 Route::get('/u/pengaturan/biodata','UserController@biodata');
 Route::get('/u/pengaturan/alamat','UserController@alamat');
 Route::get('/u/pengaturan/rekening','UserController@rekening');
-
-Route::get('uploader', function() {
-	return view('uploader');	
-});
-
-
-use Intervention\Image\ImageManager;
-use App\Models\Produk;
-use App\Models\Gambar;
-use App\Models\Stok;
-
-Route::post('uploader', function() {
-
-	$image = new ImageManager;
-	
-
-        $stok = Stok::create(['jumlah' => '4']);
-        $produk = Produk::create(['nama' => 'TV 21 in', 'stok_id' => $stok->id]);
-
-	foreach(request()->file('gambar') as $gambar) {
-		$namafile = $gambar->getClientOriginalName();
-		$extFile = $gambar->getClientOriginalExtension();
-		$namafileTanpaExt = substr($namafile, 0, strlen($namafile) - strlen($extFile) - 1);
-		$namafiles = sanitize($namafileTanpaExt);
-
-		$filename = md5(uniqid(time(), true)).'.jpg';
-  //    $image->make($gambar)->save(public_path('photo').'/'.$filename);
-        $gambar = Gambar::create(['nama' => ucwords(str_replace('-', ' ', $namafiles)), 'file' => $filename ]);
-        $produk->gambar()->attach($gambar);
-	}
-
-});
-
-

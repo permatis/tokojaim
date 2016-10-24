@@ -12,5 +12,16 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    // mix.sass('./resources/views/themes/shoppe/assets/sass/app.scss')
+    mix.styles([
+        './resources/views/themes/shoppe/assets/css/easy-responsive-tabs.css',
+        './resources/views/themes/shoppe/assets/css/slider.css',
+        './resources/views/themes/shoppe/assets/css/global.css',
+        './resources/views/themes/shoppe/assets/css/style.css',
+    ],'public/assets/css/shoppe.css');
+    mix.scripts([
+        './resources/views/themes/shoppe/assets/js/move-top.js',
+        './resources/views/themes/shoppe/assets/js/easing.js',
+        './resources/views/themes/shoppe/assets/js/startstop-slider.js',
+    ], 'public/assets/js/shoppe.js');
 });

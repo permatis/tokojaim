@@ -1,12 +1,12 @@
 
 <div class="banner">
-	<div class="container">	
+	<div class="container">
 		<div class="wmuSlider example1">
 			<div class="wmuSliderWrapper">
-			 	<article style="position: absolute; width: 100%; opacity: 0;"> 
+			 	<article style="position: absolute; width: 100%; opacity: 0;">
 				   	<div class="banner-wrap">
 						<div class="banner-top">
-							<a href="single.html">
+							<a href="#">
 								<div class="banner-top-in">
 									<img src="{{ URL::asset('assets/images/ba.png') }}" class="img-responsive" alt="">
 								</div>
@@ -20,9 +20,9 @@
 							</div>
 							<div class="clearfix"> </div>
 						</div>
-						
+
 						<div class="banner-top banner-bottom">
-						 	<a href="single.html">
+						 	<a href="#">
 								<div class="banner-top-in at">
 									<img src="{{ URL::asset('assets/images/ba2.png') }}" class="img-responsive" alt="">
 								</div>
@@ -36,13 +36,13 @@
 							</div>
 							<div class="clearfix"> </div>
 						</div>
-				   		<div class="clearfix"> </div> 
+				   		<div class="clearfix"> </div>
 				   	 </div>
 				</article>
 				<article style="position: absolute; width: 100%; opacity: 0;">
 				 	<div class="banner-wrap">
 						<div class="banner-top">
-							<a href="single.html">
+							<a href="#">
 								<div class="banner-top-in">
 									<img src="{{ URL::asset('assets/images/ba11.png') }}" class="img-responsive" alt="">
 								</div>
@@ -57,7 +57,7 @@
 							<div class="clearfix"> </div>
 						</div>
 						<div class="banner-top banner-bottom">
-							<a href="single.html">
+							<a href="#">
 								<div class="banner-top-in at">
 									<img src="{{ URL::asset('assets/images/ba21.png') }}" class="img-responsive" alt="">
 								</div>
@@ -71,14 +71,14 @@
 							</div>
 							<div class="clearfix"> </div>
 						</div>
-						
-						<div class="clearfix"></div>		
+
+						<div class="clearfix"></div>
 					</div>
 				</article>
 				<article style="position: absolute; width: 100%; opacity: 0;">
 					<div class="banner-wrap">
 						<div class="banner-top">
-							<a href="single.html">
+							<a href="#">
 								<div class="banner-top-in">
 									<img src="{{ URL::asset('assets/images/ba12.png') }}" class="img-responsive" alt="">
 								</div>
@@ -94,7 +94,7 @@
 						</div>
 
 						<div class="banner-top banner-bottom">
-							<a href="single.html">
+							<a href="#">
 								<div class="banner-top-in at">
 									<img src="{{ URL::asset('assets/images/ba22.png') }}" class="img-responsive" alt="">
 								</div>
@@ -108,7 +108,7 @@
 							</div>
 							<div class="clearfix"> </div>
 						</div>
-					   	<div class="clearfix"> </div>		
+					   	<div class="clearfix"> </div>
 					</div>
 				</article>
 			</div>
@@ -118,5 +118,5 @@
 				<li><a href="#" class="wmuActive">2</a></li>
 			</ul>
 		</div>
-	</div>   
+	</div>
 </div>

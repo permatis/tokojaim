@@ -10,26 +10,26 @@
 				<div class="item">
 					<div class=" box-in">
 						<div class=" grid_box">
-							<a href="single.html"> 
+							<a href="single.html">
 								<img src="{{ URL::asset('assets/images/pi.jpg') }}" class="img-responsive" alt="">
 								<h5>fuel t-shirt  mod : 9509</h5>
-							</a> 	
+							</a>
 					    </div>
 			    		<div class="grid_1 simpleCart_shelfItem">
-			    			<a href="#" class="cup item_add"><span class=" item_price" >123 $ <i> </i> </span></a>					
+			    			<a href="#" class="cup item_add"><span class=" item_price" >123 $ <i> </i> </span></a>
 						</div>
 					</div>
 				</div>
 
 				<div class="item">
 					<div class=" box-in">
-						<div class=" grid_box">		
+						<div class=" grid_box">
 							<a href="single.html" >
 								<img src="{{ URL::asset('assets/images/pi12.jpg') }}" class="img-responsive" alt="">
-							</a> 	
+							</a>
 		           		</div>
 		           		<div class="grid_1 simpleCart_shelfItem">
-							<a href="#" class="cup item_add"><span class=" item_price" >123 $ <i> </i> </span></a>					
+							<a href="#" class="cup item_add"><span class=" item_price" >123 $ <i> </i> </span></a>
 						</div>
 					</div>
 				</div>
@@ -37,7 +37,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="content-middle">
 		<h2 class="middle">BEST SALES</h2>
 		<div class="col-best">
@@ -108,38 +108,22 @@
 		</div>
 	</div>
 
-	<div class="content-bottom">
+	<div class="content-bottom" style="margin-bottom: 40px;">
 		<div class="col-md-8 latter">
 			<h6>NEWSLETTER</h6>
 			<p>sign up now to our newsletter discount! to get the Welcome discount</p>
-			
+
 			<div class="clearfix"> </div>
 		</div>
 		<div class="col-md-4 latter-right">
-			
-				<form>
+			<form>
 				<div class="join">
 					<input type="text" value="your email here" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'your email here';}">
 					<i> </i>
 				</div>
-					<input type="submit" value="join us">
-				</form>
-				
+				<input type="submit" value="join us">
+			</form>
 		</div>
 		<div class="clearfix"> </div>
 	</div>
-
-	<div class="bottom-content">
-		<div class="col-md-4">
-			<img src="{{ URL::asset('assets/images/ad1.png') }}" class="img-responsive" alt="">
-		</div>
-		<div class="col-md-4">
-			<img src="{{ URL::asset('assets/images/ad1.png') }}" class="img-responsive" alt="">
-		</div>
-		<div class="col-md-4">
-			<img src="{{ URL::asset('assets/images/ad1.png') }}" class="img-responsive" alt="">
-		</div>
-		<div class="clearfix"> </div>
-	</div>
-
 @endsection

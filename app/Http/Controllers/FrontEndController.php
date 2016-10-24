@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -15,8 +15,8 @@ class FrontEndController extends Controller
     private $back;
     private $kategori;
 
-    public function __construct(CartRepository $cart, 
-                                ProdukRepository $produk, 
+    public function __construct(CartRepository $cart,
+                                ProdukRepository $produk,
                                 Kategori $kategori)
     {
         $this->cart = $cart;
@@ -33,7 +33,7 @@ class FrontEndController extends Controller
     {
         $produk = $this->produk->get();
 
-        return view('frontend.home', compact('produk'));
+        return view('themes/shoppe/index', compact('produk'));
     }
 
     /**
@@ -46,18 +46,18 @@ class FrontEndController extends Controller
     {
         $kat = $this->kategori->where('nama', str_slug($parent, '-'))->first();
 
-        $kategori = ($child) ? 
+        $kategori = ($child) ?
                     $this->kategori->where('nama', str_slug($child, '-'))
-                        ->where('parent_id', $kat->id)->first() : 
+                        ->where('parent_id', $kat->id)->first() :
                     $kat;
-        
+
         if(! $kategori )
         {
             return abort(404);
         }
 
         $produks = $this->produk->getProdukByKategori($kategori);
-        
+
         return view('frontend.kategori', compact('produks'));
     }
 
@@ -69,7 +69,7 @@ class FrontEndController extends Controller
         $search = request()->get('search');
         $produk = '';
         $keywords = ($search['keywords']) ? $search['keywords'] : '';
-        
+
         if($search) {
             if(count($keywords) > 0) {
                 $produk = $this->produk->search($keywords);
@@ -94,8 +94,8 @@ class FrontEndController extends Controller
     {
         $produk = $this->produk->find($slug, 'slug');
 
-        return ($produk) ? 
-            view('frontend.detail-produk', compact('produk')) : 
+        return ($produk) ?
+            view('frontend.detail-produk', compact('produk')) :
             abort(404);
     }
 
@@ -112,7 +112,7 @@ class FrontEndController extends Controller
 
         return view('frontend.keranjang');
     }
-    
+
     /**
      * Untuk menambahkan produk ke keranjang belanja
      * @param  Request $request Request dari form input produk
@@ -124,13 +124,13 @@ class FrontEndController extends Controller
         $instance = $request->get('submit');
 
     	if($this->cart->isCart($instance)) {
-            
+
     		$produk = $this->produk->find($id);
             $cart = $this->cart->getCartById($instance, $id);
-            $jumlah = $produk->stok->jumlah;
-    		
+            $jumlah = $produk->stok;
+
             if(($cart && $jumlah > $cart->qty && ( $cart->qty + $request->get('jumlah') ) <= $jumlah ) || ! $cart) {
-				$this->cart->add($instance, $request);  				
+				$this->cart->add($instance, $request);
     		}
 
     	} else {
@@ -148,7 +148,7 @@ class FrontEndController extends Controller
     public function hapus($rowId)
     {
     	$this->cart->remove(
-            request()->get('type_cart'), 
+            request()->get('type_cart'),
             $rowId
         );
 
