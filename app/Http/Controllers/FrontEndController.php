@@ -95,7 +95,7 @@ class FrontEndController extends Controller
         $produk = $this->produk->find($slug, 'slug');
 
         return ($produk) ?
-            view('frontend.detail-produk', compact('produk')) :
+            view('themes.shoppe.detail-produk', compact('produk')) :
             abort(404);
     }
 

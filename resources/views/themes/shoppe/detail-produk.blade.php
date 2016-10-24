@@ -18,6 +18,8 @@
 
 <a href="{{ url('/') }}">Kembali</a>
  --}}
+@extends('themes/shoppe/partials/main')
+@section('content')
 
     <div class="content">
     	<div class="content_top">
@@ -280,4 +282,4 @@
  		</div>
  	</div>
     </div>
- </div>
+@endsection
