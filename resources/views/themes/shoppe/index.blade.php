@@ -12,60 +12,24 @@
         <div class="clear"></div>
     </div>
       <div class="section group">
+            @foreach($produk as $p)
             <div class="grid_1_of_4 images_1_of_4">
-                 <a href="preview.html"><img src="images/feature-pic1.jpg" alt="" /></a>
-                 <h2>Lorem Ipsum is simply </h2>
-                <div class="price-details">
-                   <div class="price-number">
-                        <p><span class="rupees">$620.87</span></p>
-                    </div>
-                            <div class="add-cart">
-                                <h4><a href="preview.html">Add to Cart</a></h4>
-                             </div>
-                         <div class="clear"></div>
-                </div>
+                 <a href="preview.html">
 
-            </div>
-            <div class="grid_1_of_4 images_1_of_4">
-                <a href="preview.html"><img src="images/feature-pic2.jpg" alt="" /></a>
-                 <h2>Lorem Ipsum is simply </h2>
+                    <img src="{{ asset('fileimages/'.$p->gambar()->first()->file) }}" alt="{{ $p->gambar()->first()->nama }}" />
+                </a>
+                 <h2>{{ $p->judul }}</h2>
                 <div class="price-details">
                    <div class="price-number">
-                        <p><span class="rupees">$899.75</span></p>
+                        <p><span class="harga">{{ $p->harga }}</span></p>
                     </div>
-                            <div class="add-cart">
-                                <h4><a href="preview.html">Add to Cart</a></h4>
-                             </div>
-                         <div class="clear"></div>
-                </div>
-
-            </div>
-            <div class="grid_1_of_4 images_1_of_4">
-                <a href="preview.html"><img src="images/feature-pic3.jpg" alt="" /></a>
-                 <h2>Lorem Ipsum is simply </h2>
-                 <div class="price-details">
-                   <div class="price-number">
-                        <p><span class="rupees">$599.00</span></p>
-                    </div>
-                            <div class="add-cart">
-                                <h4><a href="preview.html">Add to Cart</a></h4>
-                             </div>
-                         <div class="clear"></div>
+                    <div class="add-cart">
+                        <h4><a href="preview.html">Add to Cart</a></h4>
+                     </div>
+                    <div class="clear"></div>
                 </div>
             </div>
-            <div class="grid_1_of_4 images_1_of_4">
-                <a href="preview.html"><img src="images/feature-pic4.jpg" alt="" /></a>
-                 <h2>Lorem Ipsum is simply </h2>
-                <div class="price-details">
-                   <div class="price-number">
-                        <p><span class="rupees">$679.87</span></p>
-                    </div>
-                            <div class="add-cart">
-                                <h4><a href="preview.html">Add to Cart</a></h4>
-                             </div>
-                         <div class="clear"></div>
-                </div>
-            </div>
+            @endforeach
         </div>
         <div class="content_bottom">
         <div class="heading">

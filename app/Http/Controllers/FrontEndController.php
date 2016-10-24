@@ -15,9 +15,11 @@ class FrontEndController extends Controller
     private $back;
     private $kategori;
 
-    public function __construct(CartRepository $cart,
-                                ProdukRepository $produk,
-                                Kategori $kategori)
+    public function __construct(
+        CartRepository $cart,
+        ProdukRepository $produk,
+        Kategori $kategori
+    )
     {
         $this->cart = $cart;
         $this->produk = $produk;
