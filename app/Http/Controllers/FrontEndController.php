@@ -50,8 +50,6 @@ class FrontEndController extends Controller
         $child = str_replace('-', ' ', $child);
 
         $kat = $this->kategori->where('nama', $parent)->first();
-        $kategoris = $this->kategori->where('parent_id', '')->get();
-
         $kategori = ($child) ?
                     $this->kategori->where('nama', $child)
                         ->where('parent_id', $kat->id)->first() :
@@ -64,7 +62,7 @@ class FrontEndController extends Controller
 
         $produks = $this->produk->getProdukByKategori($kategori);
 
-        return view('themes.shoppe.kategori-produk', compact('produks', 'kategoris'));
+        return view('themes.shoppe.kategori-produk', compact('produks'));
     }
 
     /**

@@ -1,11 +1,11 @@
-@extends('themes/shoppe/partials/main')
+@extends('themes.shoppe.partials.main')
 @section('content')
 	<div class="header">
     @include('themes.shoppe.partials.navbar')
     </div>
     <div class="main">
 		<div class="content">
-		    <div class="section group">
+		    <div class="section split">
 		        <div class="cont-desc span_1_of_2">
 		            <div class="product-details">
 		                <div class="grid images_3_of_2">
@@ -27,25 +27,24 @@
 		                    </div>
 		                </div>
 		                <div class="desc span_3_of_2">
-		                    <h2>{{ $produk->judul }}</h2>
-		                    <div class="available">
-			                    <div class="price">
-			                        <p>Harga : <span>{{ number_format($produk->harga, 0, '', '.') }}</span></p>
+		                	<form action="{{ url('cart/tambah') }}" method="post">
+			                	{!! csrf_field() !!}
+								<input type="hidden" name="config_id" value="{{ $produk->id }}">
+			                    <h2>{{ $produk->judul }}</h2>
+			                    <div class="available">
+				                    <div class="price">
+				                        <p>Harga : <span>{{ number_format($produk->harga, 0, '', '.') }}</span></p>
+				                    </div>
+				                    <p>Kategori :  <a href="{{ $kategori_link }}">{{ $produk->kategori[0]->nama }}</a></p>
+				                    <p>Stok : {{ $produk->stok }} barang</p>
+				                    <p>Jumlah : <input name="jumlah" size="3" min="1" max="{{ $produk->stok }}" type="number" value="1">
+									</p>
 			                    </div>
-			                    <p>Kategori :  <a href="{{ $kategori_link }}">{{ $produk->kategori[0]->nama }}</a></p>
-			                    <p>Jumlah : 
-			                    	<select>
-	                            		@for($i = 1; $i < 10; $i++)
-										<option>{{ $i }}</option>
-										@endfor
-									</select>
-								</p>
-			                        
-		                    </div>
-		                    <div class="share-desc">
-								<div class="button"><span><a href="#">Add to Cart</a></span></div>					
-								<div class="clear"></div>
-							</div>
+			                    <div class="share-desc">
+									<button type="submit" name="submit" value="belanja">Add Cart</button>			
+									<div class="clear"></div>
+								</div>
+							</form>
 		                </div>
 		                <div class="clear"></div>
 		            </div>
@@ -82,18 +81,7 @@
 		        <div class="rightsidebar span_3_of_1">
 		            <h2>CATEGORIES</h2>
 		            <ul>
-		                <li><a href="#">Mobile Phones</a></li>
-		                <li><a href="#">Desktop</a></li>
-		                <li><a href="#">Laptop</a></li>
-		                <li><a href="#">Accessories</a></li>
-		                <li><a href="#">Software</a></li>
-		                <li><a href="#">Sports &amp; Fitness</a></li>
-		                <li><a href="#">Footwear</a></li>
-		                <li><a href="#">Jewellery</a></li>
-		                <li><a href="#">Clothing</a></li>
-		                <li><a href="#">Home Decor &amp; Kitchen</a></li>
-		                <li><a href="#">Beauty &amp; Healthcare</a></li>
-		                <li><a href="#">Toys, Kids &amp; Babies</a></li>
+		            	{!! widget_kategori() !!}
 		            </ul>
 		        </div>
 		    </div>

@@ -50,3 +50,7 @@ Route::get('/u/pembelian/history','UserController@history'); //sudah
 Route::get('/u/pengaturan/biodata','UserController@biodata');
 Route::get('/u/pengaturan/alamat','UserController@alamat');
 Route::get('/u/pengaturan/rekening','UserController@rekening');
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');

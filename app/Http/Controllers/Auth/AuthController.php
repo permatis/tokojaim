@@ -69,4 +69,15 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    public function showLoginForm()
+    {
+        return view('themes.shoppe.auth.login');
+    }
+
+    public function showRegistrationForm()
+    {
+        return view('themes.shoppe.auth.register');
+    }
+
 }

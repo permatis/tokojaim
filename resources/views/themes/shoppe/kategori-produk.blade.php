@@ -5,7 +5,7 @@
     </div>
     <div class="main">
         <div class="content">
-			<div class="section group">
+			<div class="section split">
 		    	<div class="span_1_of_2">
 		            <div class="content_top">
 		                <div class="heading">
@@ -33,7 +33,12 @@
 		                            <p><span class="harga">Rp. {{ number_format($p->harga, 0, '', '.') }}</span></p>
 		                        </div>
 		                        <div class="add-cart">
-		                            <h4><a href="preview.html">Add to Cart</a></h4>
+									<form action="{{ url('cart/tambah') }}" method="post">
+										{!! csrf_field() !!}
+										<input type="hidden" name="config_id" value="{{ $p->id }}">
+										<input type="hidden" name="jumlah" value="1">
+										<button type="submit" name="submit" value="belanja">Add Cart</button>
+									</form>
 		                        </div>
 		                        <div class="clear"></div>
 		                    </div>
@@ -48,19 +53,7 @@
 		            <div class="categories">
 		                <h3>Categories</h3>
 		                <ul>
-		                	@foreach($kategoris as $kat)
-		                    <li>
-		                    	<a href="{{ strtolower(url('kategori/'.str_slug($kat->nama))) }}">{{ $kat->nama }}</a>
-			                    <?php 
-			                    $childs = \App\Models\Kategori::where('parent_id', $kat->id)->get();
-			                    ?>
-		                    	<ul class="child">
-		                    		@foreach($childs as $c)
-		                    		<li><a href="{{ strtolower(url('kategori/'.str_slug($kat->nama).'/'.str_slug($c->nama) )) }}">{{ $c->nama }}</a></li>
-		                    		@endforeach
-		                    	</ul>
-		                    </li>
-		                    @endforeach
+		                	{!! widget_kategori() !!}
 		                </ul>
 		            </div>
 		        	

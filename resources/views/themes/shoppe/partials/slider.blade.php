@@ -1,13 +1,9 @@
     <div class="header_slide">
         <div class="header_bottom_left">
             <div class="categories">
+                <h3>Categories</h3>
                 <ul>
-                    <h3>Categories</h3>
-                    <li><a href="#">Mobile Phones</a></li>
-                    <li><a href="#">Desktop</a></li>
-                    <li><a href="#">Laptop</a></li>
-                    <li><a href="#">Accessories</a></li>
-                    <li><a href="#">Software</a></li>
+                    {!! widget_kategori() !!}
                 </ul>
             </div>
         </div>
