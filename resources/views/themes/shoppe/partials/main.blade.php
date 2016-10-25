@@ -10,11 +10,9 @@
 </head>
 <body>
     <div class="wrap">
-        @include('themes.shoppe.partials.header')
-        <div class="main">
-            @yield('content')
-        </div>
+        @yield('content')
     </div>
     @include('themes.shoppe.partials.footer')
+    @stack('scripts')
 </body>
 </html>
