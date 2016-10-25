@@ -19,7 +19,7 @@ Route::get('detail', function() {
 	return view('frontend.single');
 });
 Route::get('checkout', function() {
-	return view('frontend.checkout');
+	return view('themes.shoppe.checkout');
 });
 // Route::get('checkout', 'FrontEndController@checkout');
 
