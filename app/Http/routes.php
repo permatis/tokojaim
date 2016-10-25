@@ -36,6 +36,10 @@ Route::get('admin/dashboard', function () {
     return view('admin.dashboard');
 });
 
+Route::get('/admin', function () {
+    echo "kosongan bosssss";
+});
+
 Route::resource('admin/produks','ProdukController');
 Route::resource('admin/kategori','KategoriController');
 Route::resource('admin/tags','TagController');
