@@ -37,6 +37,15 @@ class FrontEndController extends Controller
 
         return view('themes/shoppe/index', compact('produk'));
     }
+    
+    // public function carikategori($nama)
+    // {
+    //     $produk = $this->produk->get();
+
+    //     return view('themes/shoppe/index', compact('produk'));
+    // }
+
+
 
     /**
      * Menampilkan produk berdasarkan kategori

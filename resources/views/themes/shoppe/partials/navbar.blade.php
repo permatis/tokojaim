@@ -34,12 +34,10 @@
                                 <input type="hidden" name="type_cart" value="belanja">
                             <button type="submit" class="close">×</button>
                             </form>
-                            {{-- <a class="close" href="keranjang.php?action=remove&amp;&amp;id=4&amp;&amp;uri=index.php"><span></span>
-                            </a> --}}
                         </li>
                         @endforeach
                         <li class="checkouts">
-                            <a href="checkout.php">Lihat Keranjang</a>
+                            <a href="/keranjang">Lihat Keranjang</a>
                         </li>
                     </ul>
                     @else 
@@ -87,7 +85,7 @@
         </div>
         <div class="search_box">
             <form>
-                <input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}"><input type="submit" value="">
+                <input type="text" placeholder="Search" class="search"><input type="submit" value="">
             </form>
         </div>
         <div class="clear"></div>

@@ -19,7 +19,10 @@ Route::get('detail', function() {
 	return view('frontend.single');
 });
 Route::get('checkout', function() {
-	return view('frontend.checkout');
+	return view('themes.shoppe.checkout');
+});
+Route::get('keranjang', function() {
+	return view('themes.shoppe.keranjang');
 });
 // Route::get('checkout', 'FrontEndController@checkout');
 
@@ -34,6 +37,10 @@ Route::group(['prefix' => 'cart'], function() {
 //===== route gawean e Hari ======//
 Route::get('admin/dashboard', function () {
     return view('admin.dashboard');
+});
+
+Route::get('/admin', function () {
+    echo "kosongan bosssss";
 });
 
 Route::resource('admin/produks','ProdukController');
