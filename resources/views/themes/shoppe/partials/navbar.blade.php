@@ -4,17 +4,25 @@
             </p>
         </div>
         <div class="account_desc">
+        @if ( Auth::guest())
             <ul>
                 <li><a href="/register">Register</a></li>
                 <li><a href="/login">Login</a></li>
                 {{-- <li><a href="#">My Account</a></li> --}}
             </ul>
+        @else
+             <li>{{ Auth::user()->name }}</li>
+             <li>
+              <a href="{{ url('/logout') }}">Logout</a></li>
+             
+
+        @endif
         </div>
         <div class="clear"></div>
     </div>
     <div class="header_top">
         <div class="logo">
-            <a href="index.html"><img src="images/logo.png" alt="" /></a>
+            <a href="{{'/'}}"><img src="asset/images/log.png" alt="" /></a>
         </div>
         <div class="cart">
             <p>Selamat Datang di Toko Online! <span>Cart:</span>

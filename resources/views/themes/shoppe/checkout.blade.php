@@ -3,17 +3,36 @@
     <div class="header">
         @include('themes.shoppe.partials.navbar')
     </div>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#next").click(function(){
+                    var current = $(".active");
+                    var next = $(".active").next(".ini");
+                    if(next.length>0) {
+                        $("#login-field").hide();
+                        $("#"+current.attr("id")+"-field").hide();
+                        $("#"+next.attr("id")+"-field").show();
+                
+                        $(".active").removeClass("active");
+                        next.addClass("active");
+                     }
+                });
+                // $("#login-field").hide();
+            });
+        </script>
+
     <div class="main">
         <div class="content">
             <ul class="steps">
-                <li id="login" class="active">Login</li>
-                <li id="pembeli">Data Pembeli</li>
-                <li id="pembayaran">Pembayaran</li>
+                <li id="login" class="ini active">Login</li>
+                <li id="pembeli" class="ini">Data Pembeli</li>
+                <li id="pembayaran" class="ini">Pembayaran</li>
             </ul>
             <div class="form-steps">
                 <div class="section split">
                     <div class="span_1_of_2 checkout">
-                        <div id="login">
+                        <div id="login-field" style>
                                 <div class="text-center">
                                     <h2>login</h2>
                                     <p>Silahkan masukkan email dan password anda.</p>
@@ -55,7 +74,7 @@
                                     {{-- <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a> --}}
                                 </form>
                         </div>
-                        <div id="pembeli">
+                        <div id="pembeli-field" style="display:none;">
                                 <div class="text-center">
                                     <h2>Data Pembeli</h2>
                                     <p>Silahkan isi informasi data anda di form yang disediakan untuk informasi pengiriman barang.</p>
@@ -102,12 +121,12 @@
                             @foreach(carts() as $cart)
                             <p>{{ $i++ }}. {{ $cart->name }} <span class="right">{{ number_format(array_sum(array_pluck(carts(), 'subtotal')) , 0, '', '.') }}</span></p>
                             @endforeach
-                            <p class="total">TOTAL <span class="right">{{ number_format(array_sum(array_pluck(carts(), 'total')) , 0, '', '.') }}</span></p>
+                            <p class="total">TOTAL <span class="right">{{ number_format(array_sum(array_pluck(carts(), 'subtotal')) , 0, '', '.') }}</span></p>
                             <a href="">Lanjut ke Pembayaran</a>
                         </div>
                     </div>
                 </div>
-                <div id="pembayaran" class="well">
+                <div id="pembayaran-field" style="display:none;" class="well">
                     <h1 class="text-center">Terima Kasih, Pesanan Anda Akan Segera di Kirim.</h1>
                     <hr>
                     <p>Hai <b>Username</b>, </p>
@@ -137,6 +156,11 @@
                     </div>
                 </div>
             </div>
+            
+                                            
         </div>
+         <a href="#" class="btn btn_facebook" id="next">next</a>
         </div>
+
+
 @endsection
