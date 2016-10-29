@@ -140,6 +140,7 @@ ul.dropdown-menu-custom {
     border: none;
 	background-color: #fff;
 	cursor: pointer;
+	color: #000;
 }
 .price-details .price-number {
 	float: none;
@@ -190,6 +191,9 @@ li ul li {
 }
 .categories li a, .span_3_of_1 li a {
 	border-bottom: none !important;
+}
+.images_1_of_4 img {
+	max-height: 150px;
 }
 #products .pagination {
 	display: flex;
@@ -443,6 +447,12 @@ form input[type="number"] {
 	-webkit-transition: all 0.3 ease;
 	transition: all 0.3 ease;
 	cursor: pointer;
+}
+.newitems .title {
+	padding-right: 70px;
+}
+.newitems .right {
+	margin-top: -43px;
 }
 .steps {
 	align-content: center;

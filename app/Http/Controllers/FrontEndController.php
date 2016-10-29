@@ -33,9 +33,10 @@ class FrontEndController extends Controller
      */
     public function index()
     {
-        $produk = $this->produk->get();
+        $produk = $this->produk->limit(4);
+        $featured = $this->produk->random(4);
 
-        return view('themes/shoppe/index', compact('produk'));
+        return view('themes/shoppe/index', compact('produk', 'featured'));
     }
     
     // public function carikategori($nama)
@@ -59,6 +60,7 @@ class FrontEndController extends Controller
         $child = str_replace('-', ' ', $child);
 
         $kat = $this->kategori->where('nama', $parent)->first();
+
         $kategori = ($child) ?
                     $this->kategori->where('nama', $child)
                         ->where('parent_id', $kat->id)->first() :

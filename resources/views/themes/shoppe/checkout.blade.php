@@ -96,14 +96,14 @@
                     </div>
 
                     <div class="span_3_of_1">
-                        <div class="cart-items">
+                        <div class="cart-items newitems">
                             <h3>Barang di Keranjang</h3>
                             <?php $i=1; ?>
                             @foreach(carts() as $cart)
-                            <p>{{ $i++ }}. {{ $cart->name }} <span class="right">{{ number_format(array_sum(array_pluck(carts(), 'subtotal')) , 0, '', '.') }}</span></p>
+                            <p class="title">{{ $i++ }}. {{ $cart->name }} </p>
+                            <span class="right">{{ number_format($cart->subtotal , 0, '', '.') }}</span>
                             @endforeach
-                            <p class="total">TOTAL <span class="right">{{ number_format(array_sum(array_pluck(carts(), 'total')) , 0, '', '.') }}</span></p>
-                            <a href="">Lanjut ke Pembayaran</a>
+                            <p class="total">TOTAL </p><span class="right">{{ number_format(array_sum(array_pluck(carts(), 'subtotal')) , 0, '', '.') }}</span>
                         </div>
                     </div>
                 </div>

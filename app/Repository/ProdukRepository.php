@@ -21,6 +21,16 @@ class ProdukRepository
 		return $this->produk->all();
 	}
 
+	public function limit($number)
+	{
+		return $this->produk->limit($number)->get();
+	}
+
+	public function random($limit = 0)
+	{
+		return $this->produk->inRandomOrder()->limit($limit)->get();
+	}
+
 	public function find($value, $key = null)
 	{
 		return ($key) ? $this->produk->where($key, $value)->first() :
@@ -36,20 +46,20 @@ class ProdukRepository
 	{
 		return ( $kategori->parent_id == 0 ) ?
 				$kategori->produk()->orWhereIn(
-					'kategori_id', [ $this->getKategoriId($kategori->id) ]
+					'kategori_id', array_pluck($this->getKategoriId($kategori->id) ,'id')
 				)->get() :
 				$kategori->produk()->get();
 	}
 
     protected function getKategoriId($parent_id)
     {
-		$kategori = $this->kategori->where('parent_id', $parent_id)->get()->toArray();
+		// $kategori = ;
 
-        foreach ($kategori as $kat) {
-            $k[] = $kat['id'];
-        }
+  //       foreach ($kategori as $kat) {
+  //           $k[] = $kat['id'];
+  //       }
 
-        return implode(',', $k);
+        return $this->kategori->where('parent_id', $parent_id)->get();
     }
 
 }

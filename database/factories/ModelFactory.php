@@ -27,26 +27,30 @@ $factory->define(App\Models\Stok::class, function (Faker\Generator $faker) {
 });
 
 $factory->define( App\Models\Produk::class, function (Faker\Generator $faker) use($factory) {
-	$judul = $faker->sentence;
-	$slug = str_slug($judul, '-');
-
     return [
-        'judul' 	=> $judul,
-        'slug' 		=> $slug,
+        'judul' 	=> $faker->sentence,
         'berat'		=> $faker->randomDigitNotNull,
         'deskripsi'	=> $faker->paragraph(3),
         'harga'		=> $faker->numberBetween($min = 100, $max = 999),
+        'stok'      => $faker->randomDigitNotNull,
         'created_at'	=> $faker->datetime(),
         'updated_at'	=> $faker->datetime(),
-        'stok_id'	=> $factory->create(\App\Models\Stok::class)->id
     ];
 });
 
 $factory->define( \App\Models\Kategori::class, function (Faker\Generator $faker) use($factory) {
 	return [
-		'nama' => $faker->sentence,
+		'nama' => $faker->word,
 		'deskripsi' => $faker->paragraph(2),
         'created_at'	=> $faker->datetime(),
         'updated_at'	=> $faker->datetime()
 	];
 });
+
+$factory->define(\App\Models\Tag::class, function(Faker\Generator $faker) use ($factory) {
+    return [
+        'nama' => $faker->sentence,
+        'created_at'    => $faker->datetime(),
+        'updated_at'    => $faker->datetime()
+    ];
+})
