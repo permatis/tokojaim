@@ -10,12 +10,12 @@ class StatusOrder extends Model
 	protected $table = 'status_order';
 
     protected $fillable = [
-    	'nama', 'deskripsi'		
+    	'nama', 'deskripsi'
     ];
 
     public function transaksi()
     {
-    	return $this->hasMany(\App\Models\Transaksi::class, 'transaksi');
+    	return $this->hasMany(\App\Models\Transaksi::class);
     }
 
 }

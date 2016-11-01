@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
+use App\Http\Requests\AlamatRequest;
+use App\Http\Requests\KonfirmasiPembayaranRequest;
 use App\Repository\CartRepository;
 use App\Repository\ProdukRepository;
+use App\Repository\ImageRepository;
 use App\Models\Kategori;
+use App\Models\Alamat;
+use App\Models\Transaksi;
+use App\Models\Konfirmasi;
 
 class FrontEndController extends Controller
 {
@@ -14,17 +19,29 @@ class FrontEndController extends Controller
     private $produk;
     private $back;
     private $kategori;
+    private $alamat;
+    private $transaksi;
+    private $konfirmasi;
+    private $image;
 
     public function __construct(
         CartRepository $cart,
         ProdukRepository $produk,
-        Kategori $kategori
+        Kategori $kategori,
+        Alamat $alamat,
+        Transaksi $transaksi,
+        Konfirmasi $konfirmasi,
+        ImageRepository $image
     )
     {
         $this->cart = $cart;
         $this->produk = $produk;
         $this->back = redirect( url()->previous() );
         $this->kategori = $kategori;
+        $this->alamat = $alamat;
+        $this->transaksi = $transaksi;
+        $this->konfirmasi = $konfirmasi;
+        $this->image = $image;
     }
 
     /**
@@ -122,18 +139,55 @@ class FrontEndController extends Controller
             abort(404);
     }
 
-    /**
-     * Tahap-tahap melakukan checkout
-     * @return array
-     */
-    public function checkout()
+    public function checkout(AlamatRequest $request)
     {
-        if(count(request()->get('step')) > 0)
-        {
-            dd(request()->get('step'));
+        $this->alamat->create(
+            array_merge($request->all(), [ 'user_id' => auth()->user()->id ])
+        );
+
+        $data_transaksi = [
+            'kd_transaksi'      => kode_pemesanan(7),
+            'total_pembayaran'  => array_sum(array_pluck(carts(), 'subtotal')),
+            'user_id'           => auth()->user()->id,
+            'status_order_id'   => 1
+        ];
+
+        $transaksi = $this->transaksi->create($data_transaksi);
+
+        foreach(carts() as $cart) {
+            $transaksi->produk()->attach( 
+                $cart->id, [ 'jumlah' => $cart->qty, 'subtotal' => $cart->subtotal]
+            );
         }
 
-        return view('frontend.keranjang');
+        return back()->with('transaksi', $transaksi);
+    }
+
+    public function konfirmasi(KonfirmasiPembayaranRequest $request)
+    {
+        $transaksi = $this->transaksi->where( 'kd_transaksi', $request->get('kd_pemesanan') )->first();
+        $konfirmasi = $this->konfirmasi->where('transaksi_id', $transaksi->id)->first();
+        $transaksi->update(['status_order_id' => 2]);
+
+        if(count($transaksi) > 0 && $konfirmasi == null) {
+            $this->image->folder = 'fileimages/konfirmasi';
+            $gambar = $this->image->save($request->file('gambar'));
+
+            $this->konfirmasi->create(
+                array_merge(
+                    array_except($request->all(), ['kd_pemesanan', 'gambar']),
+                    [ 'transaksi_id' => $transaksi->id, 
+                        'gambar_id' => $gambar->id]
+                )   
+            );
+
+            $request->session()->flash('sukses', 'Konfirmasi pembayaran sukses dibuat. Pemesanan akan segera diproses.');
+            return redirect('/konfirmasi_pembayaran');
+        } else {
+            return back()
+                ->withErrors(['kd_pemesanan' => 'Kode pemesanan tidak ada.'])
+                ->withInput();
+        }
     }
 
     /**

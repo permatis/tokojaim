@@ -1,7 +1,6 @@
-@extends('admin.partials.main')
+@extends('partials.main')
 
 @section('content')
-
 	<div class="box box-primary">
     	<div class="box-header with-border">
             <h3 class="box-title">List Produk</h3>

@@ -1,4 +1,4 @@
-@extends('admin.partials.main')
+@extends('partials.main')
 @section('content') {{ $produk->kategori[0] }}
     {!! Form::open(['route' => ['admin.produks.update', $produk->id], 'files' => true, 'method' => 'put' ]) !!}
         <div class="box box-primary">
@@ -37,7 +37,7 @@
                                         @if($key == 0)
                                         <optgroup label="&nbsp;&nbsp;&nbsp;&nbsp;{{ ucwords(str_replace('-', ' ', $child->nama)) }}"></optgroup>
                                         @endif
-                                        <option value="{{ $val->id }}"  fds {{ ( $val->id == $produk->kategori[0]->id) ? 'selected' : '' }}>
+                                        <option value="{{ $val->id }} {{ ( $val->id == $produk->kategori[0]->id) ? 'selected' : '' }}>
                                         &nbsp;&nbsp;&nbsp;&nbsp;{{ ucwords(str_replace('-', ' ', $val->nama)) }}
                                         </option>
                                         @endforeach

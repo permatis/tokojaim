@@ -34,26 +34,19 @@
             <div class="col_1_of_4 span_1_of_4">
                 <h4>Contact</h4>
                 <ul>
-                    <li><span>+91-123-456789</span></li>
-                    <li><span>+00-123-000000</span></li>
+                    <li><span>+6281801234576</span></li>
                 </ul>
                 <div class="social-icons">
                     <h4>Follow Us</h4>
                     <ul>
                         <li>
-                            <a href="#" target="_blank"><img src="images/facebook.png" alt="" /></a>
+                            <a href="#" target="_blank"><img src="{{ asset('assets/images/sosmed/facebook.png') }}" alt="facebook" /></a>
                         </li>
                         <li>
-                            <a href="#" target="_blank"><img src="images/twitter.png" alt="" /></a>
+                            <a href="#" target="_blank"><img src="{{ asset('assets/images/sosmed/twitter.png') }}" alt="twitter" /></a>
                         </li>
                         <li>
-                            <a href="#" target="_blank"><img src="images/skype.png" alt="" /> </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank"> <img src="images/dribbble.png" alt="" /></a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank"> <img src="images/linkedin.png" alt="" /></a>
+                            <a href="#" target="_blank"> <img src="{{ asset('assets/images/sosmed/linkedin.png') }}" alt="linkedin" /></a>
                         </li>
                         <div class="clear"></div>
                     </ul>
@@ -62,7 +55,7 @@
         </div>
     </div>
     <div class="copy_right">
-        <p>Company Name © All rights Reseverd | Design by <a href="http://w3layouts.com">W3Layouts</a> </p>
+        <p>Company Name © All rights Reseverd | Design by <a href="{{ url('/') }}">Toko Online</a> </p>
     </div>
 </div>
 <script type="text/javascript">

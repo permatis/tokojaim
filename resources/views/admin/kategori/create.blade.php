@@ -1,4 +1,4 @@
-@extends('admin.partials.main')
+@extends('partials.main')
 
 @section('content')
     {!! Form::open(array('route' => 'admin.kategori.store')) !!}
@@ -57,5 +57,4 @@
             </div>
 		</div>
     {!! Form::close() !!}
-
 @endsection

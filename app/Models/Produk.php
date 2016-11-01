@@ -57,7 +57,8 @@ class Produk extends Model
 
     public function transaksi()
     {
-        return $this->belongsToMany(\App\Models\Transaksi::class, 'transaksi');
+        return $this->belongsToMany(\App\Models\Transaksi::class, 'produk_transaksi')
+            ->withPivot(['jumlah', 'subtotal', 'produk_id', 'transaksi_id', 'created_at', 'updated_at']);
     }
  
     public function favorit()

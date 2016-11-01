@@ -14,13 +14,15 @@ class CreateProdukTransaksiTable extends Migration
     {
         Schema::create('produk_transaksi', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('jumlah');
+            $table->integer('subtotal');
             $table->integer('produk_id')->unsigned();
             $table->foreign('produk_id')->references('id')->on('produk')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->integer('transaksi_id')->unsigned();
             $table->foreign('transaksi_id')->references('id')->on('transaksi')
                 ->onUpdate('cascade')->onDelete('cascade');
-            //
+            $table->timestamps();
         });
     }
 

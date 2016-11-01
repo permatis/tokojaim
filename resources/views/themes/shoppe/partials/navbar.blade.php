@@ -4,17 +4,26 @@
             </p>
         </div>
         <div class="account_desc">
+        @if ( Auth::guest())
             <ul>
                 <li><a href="/register">Register</a></li>
                 <li><a href="/login">Login</a></li>
                 {{-- <li><a href="#">My Account</a></li> --}}
             </ul>
+        @else
+             <li>Selamat Datang <span class="red">{{ Auth::user()->name }}</span></li>
+             <li><a href="{{ url('/'.strtolower( auth()->user()->roles()->first()->name)) }}">Dashboard</a></li>
+             <li>
+              <a href="{{ url('/logout') }}">Logout</a></li>
+             
+
+        @endif
         </div>
         <div class="clear"></div>
     </div>
     <div class="header_top">
         <div class="logo">
-            <a href="index.html"><img src="images/logo.png" alt="" /></a>
+            <a href="{{'/'}}"><img src="asset/images/log.png" alt="" /></a>
         </div>
         <div class="cart">
             <p>Selamat Datang di Toko Online! <span>Cart:</span>
@@ -78,7 +87,7 @@
         <div class="menu">
             <ul>
                 <li class="active"><a href="/">Home</a></li>
-                <li><a href="/konfirmasi-pembayaran">Konfirmasi Pembayaran</a></li>
+                <li><a href="/konfirmasi_pembayaran">Konfirmasi Pembayaran</a></li>
                 <li><a href="contact">Contact</a></li>
                 <div class="clear"></div>
             </ul>

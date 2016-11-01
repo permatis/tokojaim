@@ -15,16 +15,20 @@ Route::get('produk/{slug}', 'FrontEndController@detail');
 Route::get('produks', function() {
 	return view('frontend.produk');
 });
+Route::post('checkout', 'FrontEndController@checkout');
+Route::get('konfirmasi_pembayaran', function() {
+	return view('themes.shoppe.konfirmasi_pembayaran');
+});
+Route::post('konfirmasi_pembayaran', 'FrontEndController@konfirmasi');
 Route::get('detail', function() {
 	return view('frontend.single');
 });
 Route::get('checkout', function() {
-	return view('themes.shoppe.checkout');
+	return (count(carts()) > 0 ) ? view('themes.shoppe.checkout') : redirect('/');
 });
 Route::get('keranjang', function() {
 	return view('themes.shoppe.keranjang');
 });
-// Route::get('checkout', 'FrontEndController@checkout');
 
 /**
  * Route untuk keranjang belanja & checkout
@@ -34,30 +38,29 @@ Route::group(['prefix' => 'cart'], function() {
     Route::delete('{id}', 'FrontEndController@hapus');
 });
 
-//===== route gawean e Hari ======//
-Route::get('admin/dashboard', function () {
-    return view('admin.dashboard');
+Route::group(['middleware' => 'auth'], function() {
+	Route::group(['prefix' => 'admin', 'middleware' => 'roles', 'roles' => ['admin']], function() {
+		Route::get('/', 'Admin\DashboardController@index');
+		Route::resource('produks','Admin\ProdukController');
+		Route::resource('kategori','Admin\KategoriController');
+		Route::resource('tags','Admin\TagController');
+		Route::resource('users','Admin\UserController');
+		Route::resource('transaksi','Admin\TransaksiController', ['only' => ['index', 'edit', 'update', 'destroy']]);
+		Route::resource('konfirmasi','Admin\KonfirmasiController', ['only' => ['index', 'edit', 'update', 'destroy']]);
+	});
+
+	Route::group(['prefix' => 'user', 'middleware' => 'roles', 'roles' => ['user']], function() {
+		Route::get('/','UserController@index');
+		Route::get('status_pemesanan','UserController@status_pemesanan');
+		Route::get('history', 'UserController@history');
+	});
+
 });
 
-Route::get('/admin', function () {
-    echo "kosongan bosssss";
-});
-
-Route::resource('admin/produks','ProdukController');
-Route::resource('admin/kategori','KategoriController');
-Route::resource('admin/tags','TagController');
-// Route::resource('admin/brands','BrandController');
-
-Route::get('/u/favorit','UserController@favorit');
-Route::get('/u/pembelian/','UserController@konfirmasi_pembayaran'); //sudah
-Route::get('/u/pembelian/status_pemesanan','UserController@status_pemesanan');
-Route::get('/u/pembelian/konfirmasi_pembayaran','UserController@konfirmasi_pembayaran'); //sudah
-Route::get('/u/pembelian/konfirmasi_penerimaan','UserController@konfirmasi_penerimaan'); //sudah
-Route::get('/u/pembelian/history','UserController@history'); //sudah
-Route::get('/u/pengaturan/biodata','UserController@biodata');
-Route::get('/u/pengaturan/alamat','UserController@alamat');
-Route::get('/u/pengaturan/rekening','UserController@rekening');
-
-Route::auth();
-
-Route::get('/home', 'HomeController@index');
+// Route::auth();
+//
+Route::get('login', 'Auth\AuthController@showLoginForm');
+Route::post('login', 'Auth\AuthController@postLogin');
+Route::get('register', 'Auth\AuthController@showRegistrationForm');
+Route::post('register', 'Auth\AuthController@postRegistration');
+Route::get('logout', 'Auth\AuthController@getLogout');

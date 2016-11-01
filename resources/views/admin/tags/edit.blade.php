@@ -1,4 +1,4 @@
-@extends('admin.partials.main')
+@extends('partials.main')
 @section('content')
     {!! Form::open(array('route' => ['admin.tags.update', $tag->id], 'method' => 'put')) !!}
 		<div class="box box-primary">

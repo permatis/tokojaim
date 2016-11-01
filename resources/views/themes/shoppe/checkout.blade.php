@@ -3,17 +3,20 @@
     <div class="header">
         @include('themes.shoppe.partials.navbar')
     </div>
+
     <div class="main">
         <div class="content">
             <ul class="steps">
-                <li id="login" class="active">Login</li>
-                <li id="pembeli">Data Pembeli</li>
-                <li id="pembayaran">Pembayaran</li>
+                <li id="login" @if( auth()->guest()) class="ini active"@endif>Login</li>
+                <li id="pembeli" @if(! auth()->guest() && ! session()->has('transaksi')) class="ini active"@endif>Data Pembeli</li>
+                <li id="pembayaran" @if(! auth()->guest() && session()->has('transaksi')) class="ini active"@endif>Pembayaran</li>
             </ul>
             <div class="form-steps">
+                @if(! session()->has('transaksi') )
                 <div class="section split">
                     <div class="span_1_of_2 checkout">
-                        <div id="login">
+                        @if(auth()->guest())
+                        <div id="login-field">
                                 <div class="text-center">
                                     <h2>login</h2>
                                     <p>Silahkan masukkan email dan password anda.</p>
@@ -47,23 +50,25 @@
                                     <div class="all-btn">
                                         <button type="submit"> Login </button> 
                                         <a href="/register" class="btn btn_register">Register</a>
-                                        <div class="right">
+                                        {{-- <div class="right">
                                             <a href="#" class="btn btn_facebook">Login with facebook</a>
-                                        </div>
+                                        </div> --}}
                                     </div>
 
                                     {{-- <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a> --}}
                                 </form>
                         </div>
-                        <div id="pembeli">
+                        @endif
+                        @if(! auth()->guest() && ! session()->has('transaksi')) 
+                        <div id="pembeli-field">
                                 <div class="text-center">
                                     <h2>Data Pembeli</h2>
                                     <p>Silahkan isi informasi data anda di form yang disediakan untuk informasi pengiriman barang.</p>
                                 </div>              
-                                <form role="form" method="POST" action="{{ url('/register') }}">
+                                <form role="form" method="POST" action="{{ url('/checkout') }}">
                                 {{ csrf_field() }}
 
-                                    <label for="name">Name</label>
+                                    <label for="name">Nama Lengkap</label>
                                         <input id="nama_lengkap" type="text" name="nama_lengkap" value="{{ old('nama_lengkap') }}">
 
                                         @if ($errors->has('nama_lengkap'))
@@ -82,7 +87,7 @@
                                         @endif
 
                                     <label for="no_hp">Nomor Handphone</label>
-                                        <input id="no_hp" type="number" name="no_hp">
+                                        <input id="no_hp" type="text" name="no_hp">
 
                                         @if ($errors->has('no_hp'))
                                             <span class="error">
@@ -90,29 +95,33 @@
                                             </span>
                                         @endif
 
-                                        <button type="submit">Lanjutkan</button>
+                                        <button type="submit">Lanjut ke Pembayaran</button>
                                 </form>
                         </div>
+                        @endif
                     </div>
 
                     <div class="span_3_of_1">
                         <div class="cart-items newitems">
                             <h3>Barang di Keranjang</h3>
-                            <?php $i=1; ?>
                             @foreach(carts() as $cart)
-                            <p class="title">{{ $i++ }}. {{ $cart->name }} </p>
+                            <p class="title">{{ $cart->name }} </p>
                             <span class="right">{{ number_format($cart->subtotal , 0, '', '.') }}</span>
                             @endforeach
-                            <p class="total">TOTAL </p><span class="right">{{ number_format(array_sum(array_pluck(carts(), 'subtotal')) , 0, '', '.') }}</span>
+                            <p class="total">TOTAL</p>
+                            <span class="right">{{ number_format(array_sum(array_pluck(carts(), 'subtotal')) , 0, '', '.') }}</span>
                         </div>
                     </div>
                 </div>
-                <div id="pembayaran" class="well">
+                @endif
+
+                @if(session()->has('transaksi'))
+                <div id="pembayaran-field" class="well active">
                     <h1 class="text-center">Terima Kasih, Pesanan Anda Akan Segera di Kirim.</h1>
                     <hr>
-                    <p>Hai <b>Username</b>, </p>
+                    <p>Hai <b>{{ auth()->user()->name }}</b>, </p>
                     <p>Terima kasih telah berbelanja di <b>Toko Online</b>.</p>
-                    <p>Kami telah mengirimkan detail pesanan anda ke email <span class="email">email@gmail.com</span>. Silahkan cek inbox atau spam.</p>
+                    <p>Kami telah mengirimkan detail pesanan anda ke email <span class="email">{{ auth()->user()->email }}</span>. Silahkan cek inbox atau spam.</p>
                     <p>Silahkan ikuti petunjuk dibawah ini untuk memproses pesanan barang anda lebih lanjut.</p>
                     <div class="confirmations">
                         <div class="column_3">
@@ -121,7 +130,7 @@
                         </div>
                         <div class="column_3">
                             <img src="{{ url('assets/images/cart2.png') }}">
-                            <p>Lakukan <a href="/konfirmasi-pembayaran">konfirmasi pembayaran</a> dengan mengisikan data pada form yang telah disediakan.</p>
+                            <p>Lakukan <a href="/konfirmasi_pembayaran">konfirmasi pembayaran</a> dengan mengisikan data pada form yang telah disediakan.</p>
                         </div>
                         <div class="column_3">
                             <img src="{{ url('assets/images/cart3.png') }}">
@@ -130,13 +139,16 @@
                     </div>
                     <div class="text-center">
                         <p>Kode Pemesanan Anda:</p>
-                        <span class="kode_pemesanan">12345678</span>
-                        <p>Jumlah uang yang harus ditransfer : Rp. </p>
+                        <span class="kode_pemesanan">{{ session('transaksi')->kd_transaksi }}</span>
+                        <p>Jumlah uang yang harus ditransfer : Rp. {{ number_format(session('transaksi')->total_pembayaran, 2, ',', '.') }}</p>
                         <p>Silahkan untuk melakukan transfer ke rekening bank <b>"Toko Online"</b>.</p>
-                        <p>Kemudian lakukan <a href="/konfirmasi-pembayaran">konfirmasi pembayaran</a></p>
+                        <p>Kemudian lakukan <a href="/konfirmasi_pembayaran">konfirmasi pembayaran</a></p>
                     </div>
                 </div>
-            </div>
+                <?php cart_destroy(); ?>
+                @endif
+            </div>          
         </div>
-        </div>
+    </div>
+
 @endsection

@@ -53,6 +53,10 @@ hr {
 .see {
 	padding: 4px;
 }
+.red {
+	color: #E4292F;
+	font-weight: bold;
+}
 .cart p span {
 	font-size: 1em;
 }
@@ -87,7 +91,7 @@ ul.dropdown-menu-custom {
     white-space: nowrap;
     text-overflow: ellipsis;
     font-size: 13px;
-    padding-right: 10px;
+    padding-right: 30px;
     text-transform: capitalize;
 }
 .dropdown-menu-custom li.total {
@@ -129,18 +133,23 @@ ul.dropdown-menu-custom {
 	background-color: #fff;
 }
 .dropdown-menu-custom>li.checkouts>a{
-    color: #000;
     font-size: 12px;
     display: block;
     text-align: center;
 }
 .dropdown-menu-custom button.close {
-    margin-top: -54px;
+    margin-top: -60px;
     float: right;
     border: none;
 	background-color: #fff;
 	cursor: pointer;
+}
+.dropdown-menu-custom>li.checkouts>a, 
+.dropdown-menu-custom button.close  {
 	color: #000;
+}
+.account_desc li {
+	font-size: 1em;
 }
 .price-details .price-number {
 	float: none;
@@ -191,9 +200,6 @@ li ul li {
 }
 .categories li a, .span_3_of_1 li a {
 	border-bottom: none !important;
-}
-.images_1_of_4 img {
-	max-height: 150px;
 }
 #products .pagination {
 	display: flex;
@@ -271,7 +277,27 @@ form textarea {
 }
 form label {
 	font-size: 18px;
-	margin-bottom: 10px;
+	/*margin-bottom: 10px;*/
+	display: block;
+}
+form select {
+	width: 100%;
+}
+.select2 {
+	margin-bottom: 20px !important;
+}
+.select2-container--default .select2-selection--single {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 1px;
+    height: 40px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+	line-height: 38px;
+	color: #9c9c9c;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+	top: 5px;
+	right: 8px;
 }
 form button {
 	font-family: "Roboto", sans-serif;
@@ -286,8 +312,9 @@ form button {
 	-webkit-transition: all 0.3 ease;
 	transition: all 0.3 ease;
 	cursor: pointer;
-	margin-top: 5px;
+	margin-top: 15px;
 	margin-bottom: 5px;
+	/*display: block;*/
 }
 .forms form button:hover,
 .forms form button:active,
@@ -296,18 +323,31 @@ form button {
 }
 form input[type="number"] {
 	outline: 0;
-	border: 1px solid rgba(0,0,0,.1);
+	border: 1px solid rgba(0,0,0, 0.1);
 	margin: 0 0 15px;
 	padding: 7px;
 	box-sizing: border-box;
 	font-size: 14px;
 	margin-top: 5px;
 }
+.upload {
+	overflow: hidden;
+	background-color: #fff;
+	padding: 7px;
+	border: 1px solid rgba(0,0,0, 0.1);
+	margin-bottom: 15px;
+}
 .checkbox {
 	margin-bottom: 10px;
 }
-.error {
+span.sukses {
+	color: green;
+}
+span.error {
 	color: red;
+}
+span.sukses, 
+span.error {
 	display: block;
 	margin-bottom: 15px;
 	margin-top: -10px;
@@ -412,8 +452,15 @@ form input[type="number"] {
 	margin-bottom: 20px;
 	font-weight: bold;
 }
+.newitems p.title {
+	display: block;
+	padding-right: 70px;
+}
 .right {
 	float: right;
+}
+.newitems .right {
+	margin-top: -40px;
 }
 .text-left {
 	text-align: left  !important;
@@ -447,12 +494,6 @@ form input[type="number"] {
 	-webkit-transition: all 0.3 ease;
 	transition: all 0.3 ease;
 	cursor: pointer;
-}
-.newitems .title {
-	padding-right: 70px;
-}
-.newitems .right {
-	margin-top: -43px;
 }
 .steps {
 	align-content: center;
@@ -556,5 +597,11 @@ a.btn_facebook {
 	display: inline-block;
 	margin-top: 10px;
 	margin-bottom: 10px;
+}
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 234px !important;
+}
+.xdsoft_datetimepicker .xdsoft_timepicker {
+	width: 60px !important;
 }
 /*# sourceMappingURL=style.css.map */

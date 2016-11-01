@@ -1,2 +1,6 @@
-@include('user.partials.menu')
-alamat.blade.php
+@extends('admin.partials.main')
+
+@section('content')
+
+
+@endsection

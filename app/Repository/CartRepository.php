@@ -27,6 +27,11 @@ class CartRepository
 		return Cart::instance($instance)->remove($rowId);
 	}
 
+	public static function destroy($instance)
+	{
+		return Cart::instance($instance)->destroy();
+	}
+
 	protected function getProduk($request)
     {
     	$produk = $this->produk->find($request->get('config_id'));

@@ -15,8 +15,7 @@ class CreateTransaksiTable extends Migration
         Schema::create('transaksi', function (Blueprint $table) {
             $table->increments('id');
             $table->string('kd_transaksi');
-            $table->string('nomor_rekening');
-            $table->string('nama_bank');
+            $table->string('total_pembayaran');
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')

@@ -10,8 +10,13 @@ class Alamat extends Model
 	protected $table = 'alamat';
 
     protected $fillable = [
-    	'kabupaten', 'alamat', 'kode_pos', 'provinsi_id'
+    	'nama_lengkap', 'no_hp', 'alamat', 'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 
     public function profile()
     {

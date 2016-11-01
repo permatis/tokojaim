@@ -25,26 +25,42 @@ class ImageRepository
 		$this->images = $images;
 	}
 
-	public function save($files, $relation)
+	public function save($files, $relation = false)
 	{
 
 		$folder = public_path($this->folder);
 
-		foreach($files as $file) {
-			$filename = $this->images->file($file);
-			if(! file_exists($folder)) {
-				$this->images->makeDirectory($folder);
+		if(! file_exists($folder)) {
+			$this->images->makeDirectory($folder);
+		}
+
+		if(is_array($files)) {
+			foreach($files as $file) {
+				$filename = $this->images->file($file);
+		     	$this->image->make($file)
+		     		->fit(200)->save($folder.'/'.$filename );
+
+		        $gambar = $this->gambar->create([
+		        	'nama' => $this->images->filename($file),
+		        	'file' => $filename
+		        ]);
+
+		        if($relation) {
+		        	$relation->gambar()->attach($gambar);
+		        }
 			}
+		} else {
+			$filename = $this->images->file($files);
 
-	     	$this->image->make($file)
-	     		->fit(200)->save($folder.'/'.$filename );
+		    $this->image->make($files)
+		     	->fit(200)->save($folder.'/'.$filename );
 
-	        $gambar = $this->gambar->create([
-	        	'nama' => $this->images->filename($file),
-	        	'file' => $filename
-	        ]);
-
-	        $relation->gambar()->attach($gambar);
+		    $gambar = $this->gambar->create([
+		        	'nama' => $this->images->filename($files),
+		        	'file' => $filename
+		        ]);
+		    
+		    return $gambar;
 		}
 	}
 	
