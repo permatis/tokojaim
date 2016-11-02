@@ -29,11 +29,6 @@ class User extends Authenticatable
         if($value) $this->attributes['password'] = bcrypt($value);
     }
 
-    public function setRememberTokenAttribute($value)
-    {
-
-    }
-
     public function hasRole($roles)
     {
         $this->hasRole = $this->getUserRole();
@@ -68,6 +63,11 @@ class User extends Authenticatable
     private function checkIfUserHasRole($need_role)
     {
         return (strtolower($need_role)==strtolower($this->hasRole[0]->name)) ? true : false;
+    }
+
+    public function accessToken()
+    {
+        return $this->hasMany(\App\Models\AccessToken::class);
     }
 
     public function profile()

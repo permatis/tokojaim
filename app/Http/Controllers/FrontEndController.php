@@ -55,7 +55,7 @@ class FrontEndController extends Controller
 
         return view('themes/shoppe/index', compact('produk', 'featured'));
     }
-    
+
     // public function carikategori($nama)
     // {
     //     $produk = $this->produk->get();
@@ -127,7 +127,7 @@ class FrontEndController extends Controller
         $produk = $this->produk->find($slug, 'slug');
 
         $parent_id = $produk->kategori[0]->parent_id;
-        if($parent_id) { 
+        if($parent_id) {
             $parent = $this->kategori->find($parent_id);
             $kategori_link = strtolower(url('kategori/'.$parent->nama.'/'.$produk->kategori[0]->nama));
         } else {
@@ -155,7 +155,10 @@ class FrontEndController extends Controller
         $transaksi = $this->transaksi->create($data_transaksi);
 
         foreach(carts() as $cart) {
-            $transaksi->produk()->attach( 
+            $produk = $this->produk->find($cart->id);
+            $produk->update([ 'stok' => $produk->stok - $cart->qty ]);
+
+            $transaksi->produk()->attach(
                 $cart->id, [ 'jumlah' => $cart->qty, 'subtotal' => $cart->subtotal]
             );
         }
@@ -166,28 +169,32 @@ class FrontEndController extends Controller
     public function konfirmasi(KonfirmasiPembayaranRequest $request)
     {
         $transaksi = $this->transaksi->where( 'kd_transaksi', $request->get('kd_pemesanan') )->first();
-        $konfirmasi = $this->konfirmasi->where('transaksi_id', $transaksi->id)->first();
-        $transaksi->update(['status_order_id' => 2]);
 
-        if(count($transaksi) > 0 && $konfirmasi == null) {
-            $this->image->folder = 'fileimages/konfirmasi';
-            $gambar = $this->image->save($request->file('gambar'));
+        if(count($transaksi) > 0 ) {
 
-            $this->konfirmasi->create(
-                array_merge(
-                    array_except($request->all(), ['kd_pemesanan', 'gambar']),
-                    [ 'transaksi_id' => $transaksi->id, 
-                        'gambar_id' => $gambar->id]
-                )   
-            );
+            $konfirmasi = $this->konfirmasi->where('transaksi_id', $transaksi->id)->first();
 
-            $request->session()->flash('sukses', 'Konfirmasi pembayaran sukses dibuat. Pemesanan akan segera diproses.');
-            return redirect('/konfirmasi_pembayaran');
-        } else {
+            if($konfirmasi == null) {
+                $this->image->folder = 'fileimages/konfirmasi';
+                $gambar = $this->image->save($request->file('gambar'));
+
+                $this->konfirmasi->create(
+                    array_merge(
+                        array_except($request->all(), ['kd_pemesanan', 'gambar']),
+                        [ 'transaksi_id' => $transaksi->id,
+                            'gambar_id' => $gambar->id]
+                    )
+                );
+
+                $transaksi->update(['status_order_id' => 2]);
+                $request->session()->flash('sukses', 'Konfirmasi pembayaran sukses dibuat. Pemesanan akan segera diproses.');
+                return redirect('/konfirmasi_pembayaran');
+            }
+        }
+
             return back()
                 ->withErrors(['kd_pemesanan' => 'Kode pemesanan tidak ada.'])
                 ->withInput();
-        }
     }
 
     /**

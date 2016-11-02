@@ -23,7 +23,8 @@ class ProdukRepository
 
 	public function limit($number)
 	{
-		return $this->produk->limit($number)->get();
+		return $this->produk->limit($number)
+			->orderBy('updated_at', 'DESC')->get();
 	}
 
 	public function random($limit = 0)

@@ -7,22 +7,26 @@ use App\Http\Controllers\Controller;
 use App\Models\Transaksi;
 use App\Models\StatusOrder;
 use App\Models\Produk;
+use App\Repository\StatusRepository;
 
 class TransaksiController extends Controller
 {
     protected $transaksi;
     protected $status;
     protected $produk;
+    protected $order;
 
     public function __construct(
         Transaksi $transaksi,
         StatusOrder $status,
-        Produk $produk
+        Produk $produk,
+        StatusRepository $order
     )
     {
         $this->transaksi = $transaksi;
         $this->status = $status;
         $this->produk = $produk;
+        $this->order = $order;
     }
 
     /**
@@ -33,7 +37,7 @@ class TransaksiController extends Controller
     public function index()
     {
         $transaksi = $this->transaksi->with('produk')->get();
-        $status = $this->getId(['menunggu']);
+        $status = $this->order->getId(['proses']);
 
         return view('admin.transaksi.index', compact('transaksi', 'status'));
     }
@@ -47,7 +51,7 @@ class TransaksiController extends Controller
     public function edit($id)
     {
         $transaksi = $this->transaksi->find($id);
-        $status = $this->status->all();
+        $status = $this->status->whereIn('id', [2,4,5])->get();
 
         return view('admin.transaksi.edit', compact('transaksi', 'status'));
     }
@@ -62,7 +66,7 @@ class TransaksiController extends Controller
     public function update(Request $request, $id)
     {
         $transaksi = $this->transaksi->find($id);
-        $idRejectCancel = $this->getId(['ditolak', 'cancel']);
+        $idRejectCancel = $this->order->getId(['ditolak', 'cancel']);
 
         $stok = [
             'stok' => $transaksi->produk[0]->pivot->jumlah + $transaksi->produk[0]->stok
@@ -87,30 +91,6 @@ class TransaksiController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     * Get id by name
-     *
-     * @param  array $search
-     * @return array
-     */
-    protected function getId($search = [])
-    {
-        $status = $this->status->where( function($query) use($search) {
-            if( $search ) {
-                $query->where('nama', 'like', '%'.$search[0].'%');
-                $nextSearch = array_slice($search, 1);
-
-                if( $nextSearch ) {
-                    foreach( $nextSearch as $nama) {
-                        $query->orWhere('nama', 'like', '%'.$nama.'%');
-                    }
-                }
-            }
-        })->get();
-
-        return array_pluck($status, 'id');
     }
 
 }

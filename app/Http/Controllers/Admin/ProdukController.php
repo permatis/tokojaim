@@ -10,6 +10,8 @@ use App\Models\Tag;
 use App\Repository\TagRepository;
 use App\Services\AllRequestService;
 use App\Repository\ImageRepository;
+use App\Models\AccessToken;
+use App\Services\SosialMediaService;
 use App\Http\Controllers\Controller;
 
 class ProdukController extends Controller
@@ -20,6 +22,8 @@ class ProdukController extends Controller
     private $tag;
     private $request;
     private $image;
+    private $acces;
+    private $sosmed;
 
     /**
      * Konstruktor for ProdukController
@@ -30,7 +34,9 @@ class ProdukController extends Controller
         Kategori $kategori,
         Tag $tag,
         AllRequestService $request,
-        ImageRepository $image
+        ImageRepository $image,
+        AccessToken $access,
+        SosialMediaService $sosmed
     )
     {
         $this->tags = $tags;
@@ -39,6 +45,8 @@ class ProdukController extends Controller
         $this->tag = $tag;
         $this->request = $request;
         $this->image = $image;
+        $this->access = $access;
+        $this->sosmed = $sosmed;
     }
 
     /**
@@ -87,6 +95,17 @@ class ProdukController extends Controller
         $this->image->save(
             $request->file('gambar'), $produk
         );
+
+        $token = $this->access->where('user_id', auth()->user()->id)->first();
+
+        if( $token ) {
+            $data = [
+        		'message' => $produk->judul .' murah',
+        		'link' => url('produk/'.$produk->slug)
+        	];
+
+            $sosmed = $this->sosmed->facebook($token->tk_facebook, $data, '1232603263447483');
+        }
 
         return redirect('admin/produks');
     }
