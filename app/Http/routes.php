@@ -1,37 +1,21 @@
 <?php
-
 /**
- * Route untuk frontend
- * 1. Home atau halaman depan
- * 2. Halaman kategori produk
- * 3. Halaman search produk
- * 4. Halaman detail produk
- * 5. Halaman checkout
+ * Route FrontEnd
  */
 Route::get('/', 'FrontEndController@index');
 Route::get('kategori/{parent}/{child?}', 'FrontEndController@kategori');
-// Route::get('produks', 'FrontEndController@search');
 Route::get('produk/{slug}', 'FrontEndController@detail');
-Route::get('produks', function() {
-	return view('frontend.produk');
-});
 Route::post('checkout', 'FrontEndController@checkout');
-Route::get('konfirmasi_pembayaran', function() {
-	return view('themes.shoppe.konfirmasi_pembayaran');
-});
 Route::post('konfirmasi_pembayaran', 'FrontEndController@konfirmasi');
-Route::get('detail', function() {
-	return view('frontend.single');
-});
+Route::get('detail', function() { return view('frontend.single'); });
 Route::get('checkout', function() {
 	return (count(carts()) > 0 ) ? view('themes.shoppe.checkout') : redirect('/');
 });
-Route::get('keranjang', function() {
-	return view('themes.shoppe.keranjang');
-});
+Route::get('konfirmasi_pembayaran', function() { return view('themes.shoppe.konfirmasi_pembayaran'); });
+Route::get('keranjang', function() { return view('themes.shoppe.keranjang'); });
 
 /**
- * Route Authentication
+ * Route Authentication atau register dan login
  */
 Route::get('login', 'Auth\AuthController@showLoginForm');
 Route::post('login', 'Auth\AuthController@postLogin');
@@ -47,6 +31,10 @@ Route::group(['prefix' => 'cart'], function() {
     Route::delete('{id}', 'FrontEndController@hapus');
 });
 
+
+/**
+ * Route group untuk admin dan user
+ */
 Route::group(['middleware' => 'auth'], function() {
 	Route::group(['prefix' => 'admin', 'middleware' => 'roles', 'roles' => ['admin']], function() {
 
@@ -71,17 +59,3 @@ Route::group(['middleware' => 'auth'], function() {
 	});
 
 });
-
-// Route::get('test', function(SammyK\LaravelFacebookSdk\LaravelFacebookSdk $fb) {
-//
-// 	$accessToken = \App\Models\AccessToken::where('user_id', auth()->user()->id)->first();
-//
-// 	$data = [
-// 	 	'message' => 'Hello from localhost',
-// 	];
-//
-// 	curl_post('https://graph.facebook.com/me/feed', $data, $accessToken->tk_facebook);
-// 	$response = $fb->get('1232603263447483?fields=access_token', $accessToken->tk_facebook);
-// 	$reponse = curl_post('https://graph.facebook.com/1232603263447483/feed', $data, $response->getGraphUser()['access_token']);
-// 	dd($reponse);
-// });
