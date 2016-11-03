@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "landaklabs/tokojaim",
+    "description": "Toko Online dengan laravel",
+    "keywords": ["laravel", "eccomerce", "shoppingcart"],
     "license": "MIT",
     "type": "project",
     "require": {

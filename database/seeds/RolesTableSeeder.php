@@ -13,7 +13,7 @@ class RolesTableSeeder extends Seeder
     {
         $admin = \App\Models\User::find(1);
     	$roleAdmin = new \App\Models\Role;
-		$roleAdmin->name = 'Administrator';
+		$roleAdmin->name = 'Admin';
 		$roleAdmin->description = 'Full feature administrator and full permission.';
 		$roleAdmin->save();
 		$admin->roles()->attach($roleAdmin);
